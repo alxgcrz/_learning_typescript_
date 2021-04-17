@@ -416,7 +416,7 @@ let unusable: void = undefined;
 
 ### 'Null' and 'Undefined'
 
-Indefinido y nulo son valores que en JavaScript que conducen a muchos errores. En TypeScript, tanto los valores indefinidos como los valores nulos en realidad tienen sus propios tipos llamados `undefined` y `null` respectivamente. Al igual que `void`, no son extremadamente útiles por sí solos:
+Indefinido y nulo son valores que en JavaScript conducen a muchos errores. En TypeScript, tanto los valores indefinidos como los valores nulos en realidad tienen sus propios tipos llamados `undefined` y `null` respectivamente. Al igual que `void`, no son extremadamente útiles por sí solos:
 
 ```typescript
 // Not much else we can assign to these variables!
