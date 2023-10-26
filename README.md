@@ -1,4 +1,4 @@
-# [TypeScript]
+# TypeScript
 
 TypeScript es un lenguaje cuyo objetivo es facilitar el desarrollo de aplicaciones a gran escala escritas en JavaScript. TypeScript añade conceptos comunes como clases, módulos, interfaces, genéricos y (opcionalmente) tipado estático a JavaScript. TypeScript es un _superset_ de JavaScript: todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto. El compilador TypeScript emite código JavaScript válido y entendible por cualquier navegador que soporte Javascript.
 
@@ -90,7 +90,8 @@ tsc
 // Lo mismo pero en modo 'watch'
 tsc -w
 
-// Compilamos el fichero 'main.ts' sin utilizar el fichero 'tsconfig.json' y por tanto tendremos que indicar los parámetros en el comando
+/* Compilamos el fichero 'main.ts' sin utilizar el fichero 'tsconfig.json' 
+y por tanto tendremos que indicar los parámetros en el comando */
 tsc main.ts --target es5
 ```
 
@@ -115,17 +116,11 @@ printFirstNames([
 
 Para depurar el código TypeScript en el navegador, debemos utilizar un fichero `*.map` de forma que el navegador pueda relacionar el código Javascript que está ejecutando con el código fuente escrito en TypeScript. Para que el compilador TypeScript genere este fichero lo indicamos con `"sourceMap": true` en el fichero de configuración `tsconfig.json`.
 
-Disponemos de varios editores online o _playground_ para escribir y probar código escrito en TypeScript como puede ser el [editor oficial](http://www.typescriptlang.org/play/index.html) o un editor multilenguaje como [repl.it](https://repl.it/languages/typescript).
-
-Más información:
-
-- [TypeScript in 5 minutes](http://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-- [TypeScript](http://www.typescriptlang.org/docs/home.html)
-- [Learn TypeScript](https://learnxinyminutes.com/docs/es-es/typescript-es/)
+Disponemos de varios editores online o _playground_ para escribir y probar código escrito en TypeScript como puede ser el [editor oficial](https://www.typescriptlang.org/play).
 
 ## Tipos básicos
 
-Para que los programas sean útiles, debemos poder trabajar con algunas de las unidades de datos más simples: números, cadenas, estructuras, valores booleanos y similares. En TypeScript, se admite la mayoría de los tipos que se esperaría en JavaScript.
+Para que los programas sean útiles, debemos poder trabajar con algunas de las unidades de datos más simples: números, cadenas, estructuras, valores booleanos y similares. En [TypeScript](http://www.typescriptlang.org/docs/handbook/basic-types.html), se admite la mayoría de los tipos que se esperaría en JavaScript.
 
 El tipo de la variable se indica después del nombre. Se separa el nombre de la variable y el tipo mediante dos puntos ':', como por ejemplo `'let isDone: boolean = false'`.
 
@@ -157,8 +152,6 @@ let isVisible: boolean; // declaration with type annotation
 isVisible = true; // assignment of bool
 isVisible = "hidden"; // Error: string not assignable to boolean
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/basic-types.html)
 
 ### _`Boolean`_
 
@@ -335,7 +328,9 @@ console.log(valueColor); // Se muestra '2' que es el valor de 'Green'
 
 ### Any
 
-En determinados escenarios es posible que tengamos que describir una variable con un tipo que es desconocido dado que su valor puede provenir de contenido dinámico, como por ejemplo, del usuario o de una biblioteca de terceros. En estos casos, podemos optar por indicar al compilador de TypeScript que no realice la verificación de tipos ni la existencia de sus miembros o métodos. Para ello, usamos el tipo `any`:
+En determinados escenarios es posible que tengamos que describir una variable con un tipo que es desconocido dado que su valor puede provenir de contenido dinámico, como por ejemplo, del usuario o de una biblioteca de terceros.
+
+En estos casos, podemos optar por indicar al compilador de TypeScript que no realice la verificación de tipos ni la existencia de sus miembros o métodos. Para ello, usamos el tipo `any`:
 
 ```typescript
 let notSure: any = 4;
@@ -343,7 +338,10 @@ notSure = "maybe a string instead";
 console.log(notSure.length); //Imprime 22
 
 notSure = false; // okay, definitely a boolean
-console.log(notSure.length); // El compilador no emite ningún error e imprime 'undefined' dado que el tipo boolean no tiene el atributo 'length'
+
+/* El compilador no emite ningún error e imprime 'undefined' 
+dado que el tipo boolean no tiene el atributo 'length' */
+console.log(notSure.length); 
 ```
 
 El tipo `any` es una forma poderosa de trabajar con código JavaScript existente, permitiéndole optar gradualmente por la verificación de tipos durante la compilación.
@@ -384,10 +382,14 @@ Por ejemplo, definimos una variable usando el _'union type'_ `boolean|number` de
 
 ```typescript
 let isVisible: boolean | number = true;
-console.log(isVisible.length); // El compilador genera un error en tiempo de compilación ya que el tipo 'boolean' no tiene la propiedad 'length'
+/* El compilador genera un error en tiempo de compilación 
+ya que el tipo 'boolean' no tiene la propiedad 'length' */
+console.log(isVisible.length); 
 
 isVisible = "Yes, is visible";
-console.log(isVisible.length); // Ahora el compilador no genera ningún error ya que ahora la variable almacena un 'string' que sí tiene la propiedad 'length'
+/* Ahora el compilador no genera ningún error ya que 
+ahora la variable almacena un 'string' que sí tiene la propiedad 'length' */
+console.log(isVisible.length); 
 ```
 
 ### Void
@@ -500,8 +502,12 @@ No tiene impacto en el tiempo de ejecución, y es utilizado exclusivamente por e
 ```typescript
 let someValue: any = "this is a string";
 
-let strLength: number = someValue.lengt; // Pese a escribir mal 'length', el compilador no muestra ningún error
-let strLength: number = (someValue as string).length; // Ahora, si escribimos mal 'length' el compilador nos mostrará un error. Además, el autocompletado del editor autocompleta correctamente el nombre de la variable 'length'
+// Pese a escribir mal 'length', el compilador no muestra ningún error
+let strLength: number = someValue.lengt;
+
+/* Ahora, si escribimos mal 'length' el compilador nos mostrará un error. 
+Además, el autocompletado del editor autocompleta correctamente el nombre de la variable 'length' */
+let strLength: number = (someValue as string).length; 
 ```
 
 ## Declaración de variables
@@ -700,7 +706,7 @@ En TypeScript se pueden emplear construccciones orientadas a objetos como interf
 
 ### Interfaces
 
-Una interfaz es una construcción TypeScript. No hay salida compilada en JavaScript. Esto se debe a que una interfaz es solo un tipo sin implementación. Como JavaScript no tiene tipos y no hay implementación para una interfaz, no hay nada que generar en JavaScript.
+Una [interfaz](http://www.typescriptlang.org/docs/handbook/interfaces.html) es una construcción TypeScript. No hay salida compilada en JavaScript. Esto se debe a que una interfaz es solo un tipo sin implementación. Como JavaScript no tiene tipos y no hay implementación para una interfaz, no hay nada que generar en JavaScript.
 
 Uno de los principios básicos de TypeScript es la verificación de tipos. Dado que una interfaz es solo un tipo sin implementación, es una forma poderosa de crear contratos de forma que si no se satisface la interfaz, TypeScript mostrará un error en tiempo de compilación.
 
@@ -741,8 +747,6 @@ console.log(getFullName({})); // Error: firstName is missing
 
 console.log(getFullName(25)); // Error: Argument of type '25' is not assignable to parameter of type 'Friend'
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/interfaces.html)
 
 #### Propiedades de sólo lectura
 
@@ -814,7 +818,7 @@ let dev: Developer = new Friend(); // OK, because property exists
 
 La especificación de Javascript ES2015 tiene soporte para las clases. Gracias a TypeScript, podemos usar clases y compilar el código a 'ES5' o incluso a 'ES3'.
 
-Una clase tiene propiedades, métodos y un constructor usado para instanciar la clase:
+Una [clase](http://www.typescriptlang.org/docs/handbook/classes.html) tiene propiedades, métodos y un constructor usado para instanciar la clase:
 
 ```typescript
 class Friend {
@@ -845,8 +849,6 @@ Para instanciar una clase usamos la palabra clave `new` al igual que en C# o Jav
 let friend1 = new Friend("Thomas", "Huber");
 let friend2 = new Friend("Julia");      // se omite el parámetro opcional 'lastName'
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html)
 
 #### Constructor
 
@@ -904,7 +906,7 @@ console.log(friend.knowsTypeScript); // Prints 'true' que es el valor por defect
 
 #### Propiedades en los parámetros del constructor
 
-_'Parameter properties'_ es una forma directa en TypeScript de definir propiedades de forma implícita que serán definidas e inicializadas por el compilador a partir de los parámetros del constructor.
+[_'Parameter properties'_](http://www.typescriptlang.org/docs/handbook/classes.html#parameter-properties) es una forma directa en TypeScript de definir propiedades de forma implícita que serán definidas e inicializadas por el compilador a partir de los parámetros del constructor.
 
 Para indicar al compilador que es un _'parameter property'_ se añade el modificador de visibilidad al parámetro en el constructor. El compilador definirá e inicializará una propiedad con el mismo nombre que el parámetro de forma automática:
 
@@ -920,17 +922,16 @@ class Friend {
   }
 }
 
-// Misma clase pero haciendo uso de 'parameter properties'. Al añadir 'public' el compilador generará e inicializará la propiedad automáticamente
+/* Misma clase pero haciendo uso de 'parameter properties'. 
+Al añadir 'public' el compilador generará e inicializará la propiedad automáticamente */
 class Friend {
   constructor(public firstName: string, public lastName?: string) { }
 }
 ```
 
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html#parameter-properties)
-
 #### 'Getters/Setters'
 
-TypeScript admite _'getters/setters'_ como una forma de interceptar accesos a un miembro de un objeto como ocurre en C#. La única limitación es que tenemos que indicar un _target 'ES5'_ o superior. En la especificación _'ES3'_ o inferior no está soportado.
+TypeScript admite [_'getters/setters'_](http://www.typescriptlang.org/docs/handbook/classes.html#accessors) como una forma de interceptar accesos a un miembro de un objeto como ocurre en C#. La única limitación es que tenemos que indicar un _target 'ES5'_ o superior. En la especificación _'ES3'_ o inferior no está soportado.
 
 ```typescript
 class Friend {
@@ -946,7 +947,8 @@ class Friend {
 }
 
 let friend = new Friend();
-friend.firstName = "Thomas"; // A diferencia de Java, la notación es 'invisible' como si no se estuviera haciendo uso del 'set()'
+// A diferencia de Java, la notación es 'invisible' como si no se estuviera haciendo uso del 'set()'
+friend.firstName = "Thomas"; 
 console.log(friend.firstName); // ni del 'get()'
 ```
 
@@ -965,8 +967,6 @@ let friend = new Friend();
 console.log(friend.firstName); // OK
 friend.firstName = "Julia"; // Error, as property is readonly
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html#accessors)
 
 #### Propiedades de sólo lectura
 
@@ -991,7 +991,7 @@ class Friend {
 
 #### Propiedades estáticas
 
-TypeScript admite propiedades estáticas. Las propiedades estáticas pertenecen a la clase y no a una instancia de la clase. Eso significa que su valor existe solo una vez, sin importar cuántas instancias se creen de la clase.
+TypeScript admite [propiedades estáticas](http://www.typescriptlang.org/docs/handbook/classes.html#static-properties). Las propiedades estáticas pertenecen a la clase y no a una instancia de la clase. Eso significa que su valor existe solo una vez, sin importar cuántas instancias se creen de la clase.
 
 ```typescript
 class Friend {
@@ -1007,11 +1007,9 @@ new Friend();
 console.log(Friend.friendCounter); // Logs 3
 ```
 
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html#static-properties)
-
 ### Modificadores de acceso
 
-Por defecto, todos los miembros de una clase como propiedades, métodos y el constructor son **públicos** en TypeScript. El modificador `public` significa que se puede acceder a cualquier miembro de una clase que sea público desde fuera de esa clase. Se puede marcar como `public` de forma explícita, pero no es necesario salvo por legibilidad.
+Por defecto, todos los miembros de una clase como propiedades, métodos y el constructor son **públicos** en [TypeScript](http://www.typescriptlang.org/docs/handbook/classes.html#public-private-and-protected-modifiers). El modificador `public` significa que se puede acceder a cualquier miembro de una clase que sea público desde fuera de esa clase. Se puede marcar como `public` de forma explícita, pero no es necesario salvo por legibilidad.
 
 Los modificadores de acceso son muy parecidos a Java:
 
@@ -1019,11 +1017,9 @@ Los modificadores de acceso son muy parecidos a Java:
 - `private` -> miembro sólo visible dentro de la clase y no fuera de ella.
 - `protected` -> miembro sólo visible dentro de la clase y en las subclases, pero no fuera de ella.
 
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html#public-private-and-protected-modifiers)
-
 ### Herencia
 
-TypeScript tiene soporte para la herencia, uno de los pilares de la **"Programación Orientada a Objetos"**. Al igual que Java se usa la palabra reservada `extends` para heredar de una clase existente:
+TypeScript tiene soporte para la [herencia](http://www.typescriptlang.org/docs/handbook/classes.html#inheritance), uno de los pilares de la **"Programación Orientada a Objetos"**. Al igual que Java se usa la palabra reservada `extends` para heredar de una clase existente:
 
 ```typescript
 class Friend {
@@ -1053,11 +1049,9 @@ class Developer extends Friend {
 }
 ```
 
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html#inheritance)
-
 ### Clases abstractas
 
-TypeScript tiene soporte para el concepto de clases abstractas. Con una clase abstracta se fuerza a la subclase a que implemente los métodos abstractos.
+TypeScript tiene soporte para el concepto de [clases abstractas](http://www.typescriptlang.org/docs/handbook/classes.html#abstract-classes). Con una clase abstracta se fuerza a la subclase a que implemente los métodos abstractos.
 
 Para crear una clase abstracta se utiliza la palabra reservada `abstract`. Los métodos abstractos que tienen que ser implementados también se marcan con la palabra `abstract`.
 
@@ -1077,8 +1071,6 @@ class Developer extends Friend {
 let dev: Developer = new Developer("John");
 dev.sayHello();  // Prints 'Hi, I'm John
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/classes.html#abstract-classes)
 
 ### El operador 'instanceof'
 
@@ -1156,9 +1148,7 @@ console.log(second); // Prints '2'
 
 ## Funciones
 
-Las funciones son la base fundamental de cualquier aplicación en JavaScript. En TypeScript, aunque hay clases, espacios de nombres y módulos, las funciones siguen desempeñando un papel clave en la descripción de cómo hacer las cosas. TypeScript también agrega algunas capacidades nuevas a las funciones estándar de JavaScript para que sea más fácil trabajar con ellas.
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/functions.html)
+Las [funciones](http://www.typescriptlang.org/docs/handbook/functions.html) son la base fundamental de cualquier aplicación en JavaScript. En TypeScript, aunque hay clases, espacios de nombres y módulos, las funciones siguen desempeñando un papel clave en la descripción de cómo hacer las cosas. TypeScript también agrega algunas capacidades nuevas a las funciones estándar de JavaScript para que sea más fácil trabajar con ellas.
 
 ### Tipos de funciones
 
@@ -1203,7 +1193,7 @@ let add: (baseValue: number, increment: number) => number = function(x: number, 
 
 ### Parámetros opcionales
 
-En Javascript se pueden omitir parámetros en la llamada de la función mientras que en TypeScript no se puede. Si una parámetro no es obligatorio podemos marcarlo como **parámetro opcional** y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
+En Javascript se pueden omitir parámetros en la llamada de la función mientras que en TypeScript no se puede. Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, lastName?: string) {
@@ -1220,8 +1210,6 @@ console.log(getFullName()); // Error: firstName parameter missing
 ```
 
 La única regla cuando usamos parámetros opcionales es que los **parámetros obligatorios se definen en primer lugar** y luego se definen los parámetros opcionales.
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters)
 
 ### Valores por defecto
 
@@ -1242,7 +1230,7 @@ console.log(getFullName()); // Ahora si podemos hacer una llamada sin parámetro
 console.log(getFullName(undefined, "Doe"));
 ```
 
-Los parámetros con valor por defecto pueden estar al principio. En ese caso, hacemos la llamada asignando `undefined`.
+Los [parámetros con valor por defecto](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters) pueden estar al principio. En ese caso, hacemos la llamada asignando `undefined`.
 
 Si marcamos un parámetro como **opcional y le asignamos un valor por defecto** el compilador arrojará un error en tiempo de compilación:
 
@@ -1253,11 +1241,9 @@ function getFullName(firstName?: string = "John") {
 }
 ```
 
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters)
-
 ### Número variable de parámetros
 
-En determinadas situaciones podemos necesitar que una función acepte un número variable de parámetros. Al igual que Java o Kotlin, TypeScript permite el paso de un número variable de parámetros. En TypeScript se llama _'rest parameters'_ y se indica mediante tres puntos (...) delante del nombre del parámetro:
+En determinadas situaciones podemos necesitar que una función acepte un número variable de parámetros. Al igual que Java o Kotlin, TypeScript permite el paso de un número variable de parámetros. En TypeScript se llama [_'rest parameters'_](http://www.typescriptlang.org/docs/handbook/functions.html#rest-parameters) y se indica mediante tres puntos (...) delante del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, ...moreNames: string[]) {
@@ -1279,8 +1265,6 @@ Si tenemos un array de cadenas, podemos hacer la llamada a la función añadiend
 let additionalNames: string[]= ["Claudius", "Huber", "Developer"];
 console.log(getFullName("Thomas", ...additionalNames));
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/functions.html#rest-parameters)
 
 ### 'Async' y 'Await'
 
@@ -1310,7 +1294,7 @@ main();
 
 ## Módulos
 
-Los módulos sirven para estructurar el código en múltiples ficheros `.ts` en vez de escribir todo el código en un único fichero. Cada fichero tendrá su propio ámbito cuando se usan módulos por lo que hay que exportar explícitamente clases o variables para luego ser importadas y utilizadas en otros ficheros.
+Los [módulos](http://www.typescriptlang.org/docs/handbook/modules.html) sirven para estructurar el código en múltiples ficheros `.ts` en vez de escribir todo el código en un único fichero. Cada fichero tendrá su propio ámbito cuando se usan módulos por lo que hay que exportar explícitamente clases o variables para luego ser importadas y utilizadas en otros ficheros.
 
 Los módulos se incluyen de forma nativa en la especificación ES2015 y por tanto también están disponibles en TypeScript. Con TypeScript se pueden compilar los módulos para ES5 o ES3.
 
@@ -1330,8 +1314,6 @@ Hay muchos formatos de módulos ('es2015', 'commonjs', 'system', 'amd', 'umd'). 
   }
 }
 ```
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/modules.html)
 
 ### Basics
 
@@ -1528,7 +1510,7 @@ var boarder = new Friends.Skateboarder("Foo");
 
 Cuando se utiliza una biblioteca JavaScript existente, TypeScript no conoce los tipos ya que JavaScript no tiene tipos. Sin tipos, no se obtienen errores en tiempo de compilación ya que TypeScript no puede realizar comprobaciones de tipos.
 
-Es por eso que TypeScript admite archivos de declaración para bibliotecas JavaScript existentes. El archivo de declaración es un archivo TypeScript normal que por convención termina con `d.ts` y contiene las declaraciones de tipo para dicha biblioteca.
+Es por eso que TypeScript admite [archivos de declaración](http://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) para bibliotecas JavaScript existentes. El archivo de declaración es un archivo TypeScript normal que por convención termina con `d.ts` y contiene las declaraciones de tipo para dicha biblioteca.
 
 Por ejemplo, pongamos que tenemos una pequeña biblioteca Javascript con una única función:
 
@@ -1565,8 +1547,6 @@ printFirstName(friend);
 Este código funciona pero no hay ningún tipo y además TypeScript muestra un error ya que no puede encontrar la función `printFirstName(friend)` en tiempo de compilación. Aún así, si compilamos el código la función sí que existe en tiempo de ejecución y el código funciona perfectamente.
 
 Para deshacerse del error y obtener una escritura estática que permita pasar un parámetro correcto a la función `printFirstName(friend)`, podemos declarar la función `printFirstName(friend Friend)` incluyendo una interfaz para su parámetro, como por ejemplo `Friend`.
-
-[Más información en la documentación oficial.](http://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
 
 ### Declarar una función
 
@@ -1820,7 +1800,16 @@ var tuple = pairToTuple({ item1: "hello", item2: "world" });
 /// <reference path="jquery.d.ts" />
 ```
 
-## License
+---
+
+## Enlaces de interés
+
+- <https://www.typescriptlang.org/>
+- <http://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html>
+- <http://www.typescriptlang.org/docs/home.html>
+- <https://learnxinyminutes.com/docs/es-es/typescript-es/>
+
+## Licencia
 
 [![Licencia de Creative Commons](https://i.creativecommons.org/l/by-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 Esta obra está bajo una [licencia de Creative Commons Reconocimiento-Compartir Igual 4.0 Internacional](http://creativecommons.org/licenses/by-sa/4.0/).
