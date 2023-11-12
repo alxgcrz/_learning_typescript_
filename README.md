@@ -1805,9 +1805,14 @@ var tuple = pairToTuple({ item1: "hello", item2: "world" });
 ## Enlaces de interés
 
 - <https://www.typescriptlang.org/>
-- <http://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html>
-- <http://www.typescriptlang.org/docs/home.html>
+- <https://www.typescriptlang.org/docs/>
+- <https://roadmap.sh/typescript>
 - <https://learnxinyminutes.com/docs/es-es/typescript-es/>
+- <https://goalkicker.com/TypeScriptBook2/>
+- <https://github.com/dzharii/awesome-typescript>
+- <https://github.com/semlinker/awesome-typescript>
+- <https://github.com/type-challenges/type-challenges>
+- <https://the-algorithms.com/language/typescript>
 
 ## Licencia
 
