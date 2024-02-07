@@ -1,72 +1,60 @@
 # TypeScript
 
-TypeScript es un lenguaje cuyo objetivo es facilitar el desarrollo de aplicaciones a gran escala escritas en JavaScript. TypeScript añade conceptos comunes como clases, módulos, interfaces, genéricos y (opcionalmente) tipado estático a JavaScript. TypeScript es un _superset_ de JavaScript: todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto. El compilador TypeScript emite código JavaScript válido y entendible por cualquier navegador que soporte Javascript.
+TypeScript es un lenguaje de programación de código abierto desarrollado por Microsoft y que se basa en JavaScript. TypeScript añade conceptos comunes como clases, módulos, interfaces, genéricos y (opcionalmente) tipado estático a JavaScript. TypeScript es **fuertemente tipado** ya que requiere de que se le especifiquen los tipos de
+datos que se quieren utilizar.
 
-Una forma de instalar TypeScript es via _NPM_: `npm install -g typescript`
+TypeScript es un _superset_ de JavaScript: todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto.
 
-Podemos comprobar la versión de Typescript instalada: `tsc -v`
+El compilador TypeScript _"transpila"_ código escrito en TypeScript en código JavaScript válido y entendible por cualquier navegador que soporte Javascript.
+
+## Instalación
+
+La forma más rápida y cómoda de instalar TypeScript es via **_NPM_**. TypeScript está disponible como **paquete** en el registro de [NPM](https://www.npmjs.com/package/typescript).
+
+Para instalar el compilador de TypeScript de forma **global** se ejecuta por consola:
+
+```sh
+npm install -g typescript
+```
+
+Otra forma es instalar TypeScript de forma **local** al proyecto:
+
+```sh
+// Inicializar un proyecto con npm (creará el fichero 'package.json')
+npm init
+
+// Instalar TypeScript de forma local
+npm install --save-dev typescript
+```
+
+Podemos comprobar la versión de Typescript instalada:
+
+```sh
+tsc -v
+```
 
 ## Usando TypeScript
 
-Comenzamos el ejemplo creando un fichero Javascript normal y corriente llamado `main.js` con el siguiente contenido:
+Para compilar un fichero TypeScript llamado `main.ts` escribimos en el terminal:
 
-```javascript
-function printFirstNames(friends) {
-  for (let friend of friends) {
-    console.log(friend.firstName);
-  }
-}
-printFirstNames(7);
-```
-
-Aunque la función `printFirstNames()` espera un array, le pasamos un número entero. En Javascript no obtendremos un error de compilación. Sólo obtendremos un error al ejecutar el código.
-
-Creamos un fichero `index.html` y en la etiqueta `<body>` incluiremos la etiqueta `<script>` para referenciar el fichero `main.js`. Cuando un script se referencia en la etiqueta `<body>` se ejecutará cuando la página sea cargada por el navegador. Si no queremos que se ejecute el código Javascript sino que únicamente sea cargado por el navegador y hacer las llamadas al código Javascript cuando sea necesario, debemos añadir la referencia en la etiqueta `<head>`:
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Getting started with TypeScript</title>
-  </head>
-  <body>
-    <script src="main.js"></script>
-  </body>
-</html>
-```
-
-Para abrir el fichero `index.html` en el navegador podemos hacer doble click en el _'Explorador de ficheros'_ de Windows o desde el terminal ('Ctrl + J') de Visual Studio Code escribir `'start index.html'`.
-
-Para seguir con el ejercicio, renombramos el fichero Javascript a `main.ts`. Esto indica al compilador de TypeScript que `main.ts` es un fichero que contiene código TypeScript y que deberá compilarlo a código Javascript. El compilador creará un fichero `main.js` con el código compilado a Javascript válido y entendible por cualquier navegador.
-
-Para compilar un fichero TypeScript escribimos en el terminal `'tsc main.ts'`.
-
-Para no tener que compilar un fichero TypeScript cada vez que realicemos cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ con `'tsc main.ts -w'` de forma que compilará el fichero TypeScript cada vez que detecte un cambio. Podemos finalizar el proceso pulsando 'Ctrl + C':
-
-```terminal
+```sh
 tsc main.ts
+```
 
+Para no tener que compilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que compilará el fichero TypeScript cada vez que detecte un cambio. :
+
+```sh
+// Se finaliza el proceso con 'Ctrl + C'
 tsc main.ts -w
 ```
 
-Aunque ahora sea un fichero `.ts` el compilador de TypeScript tampoco genera ningún error a la hora de compilar el fichero debido a que no hemos indicado el tipo del parámetro de la función. Para solucinarlo añadimos una interfaz, de forma que ahora sí podemos indicar el tipo necesario que debemos pasar como parámetro a la función. De esta forma, el compilador de TypeScript mostrará un error en tiempo de compilación:
+Para inicializar un proyecto TypeScript, escribimos por terminal dentro de la carpeta del proyecto:
 
-```typescript
-interface Friend {
-  firstName: string;
-}
-
-function printFirstNames(friends: Friend[]) {
-  for (let friend of friends) {
-    console.log(friend.firstName);
-  }
-}
-prinFirstNames(7);
+```sh
+tsc --init
 ```
 
-De todas formas, pese a que el compilador nos muestra el error en el editor de código, sigue siendo posible compilar el fichero a Javascript. Para evitarlo se indica con el parámetro `--noEmitOnError` al compilar el fichero por terminal o directamente en el fichero `tsconfig.json`.
-
-Para inicializar un fichero `tsconfig.json` en un proyecto con TypeScript, escribimos en el terminal `tsc --init`. Esto crea un fichero `tsconfig.json` con las opciones por defecto:
+Esto crea un fichero `tsconfig.json` con las opciones por defecto. La presencia de este archivo significa que este directorio es la raíz del proyecto. Un ejemplo de este fichero sería:
 
 ```json
 {
@@ -74,55 +62,46 @@ Para inicializar un fichero `tsconfig.json` en un proyecto con TypeScript, escri
     "module": "commonjs",
     "target": "es5",
     "noImplicitAny": false,
-    "sourceMap": false
+    "sourceMap": true
   }
 }
 ```
 
-Con la opción `target` le indicamos al compilador de TypeScript que versión de Javascript tiene que cumplir el código Javascript que genere al compilar el código.
+Algunas opciones son:
 
-Es importante indicar que cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, no debemos indicar el nombre del fichero con el código Typescript que vamos a compilar:
+- **`target`**: la versión de JavaScript a la que se tiene que compilar.
 
-```typescript
-// Hacemos uso de las opicines del fichero 'tsconfig.json' al compilar nuestro fichero 'main.ts'
-tsc
+- **`module`**: el sistema de módulos a utilizar
 
-// Lo mismo pero en modo 'watch'
-tsc -w
+- **`strict`**: habilitar/deshabilitar todas las opciones estrictas de comprobación de tipos
 
-/* Compilamos el fichero 'main.ts' sin utilizar el fichero 'tsconfig.json' 
-y por tanto tendremos que indicar los parámetros en el comando */
-tsc main.ts --target es5
-```
+- **`outDir`**: el directorio de salida de los ficheros JavaScript compilados
 
-Corregimos el error en el fichero `main.ts` pasándole a la función `printFirstName(friends: Friend[])` un array de objetos de tipo `Friend`:
+- **`rootDir`**: la carpeta raíz donde se ubican los ficheros TypeScript
 
-```typescript
-interface Friend {
-  firstName: string;
-}
+- **`noImplicitAny`**: habilitar/deshabilitar la generación de informes de error para expresiones y declaraciones con un tipo 'any' implícito
 
-function printFirstNames(friends: Friend[]) {
-  for (let friend of friends) {
-    console.log(friend.firstName);
-  }
-}
-printFirstNames([
-  { firstName: "Thomas" },
-  { firstName: "Julia" },
-  { firstName: "Anna" }
-]);
-```
+- **`sourceMap`**: genera ficheros `*.map` en la compilación de ficheros
 
-Para depurar el código TypeScript en el navegador, debemos utilizar un fichero `*.map` de forma que el navegador pueda relacionar el código Javascript que está ejecutando con el código fuente escrito en TypeScript. Para que el compilador TypeScript genere este fichero lo indicamos con `"sourceMap": true` en el fichero de configuración `tsconfig.json`.
+[Más información sobre este fichero 'tsconfig.json'](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+
+Es importante indicar que cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, no se debe indicar el nombre del fichero o los ficheros con el código Typescript, ya que compilará todos los ficheros `.ts` del proyecto.
+
+Para depurar el código TypeScript en el navegador, debemos utilizar un fichero `*.map` de forma que el navegador pueda relacionar el código Javascript que está ejecutando con el código fuente escrito en TypeScript. Este fichero se genera indicando `"sourceMap": true` en el fichero de configuración `tsconfig.json`.
 
 Disponemos de varios editores online o _playground_ para escribir y probar código escrito en TypeScript como puede ser el [editor oficial](https://www.typescriptlang.org/play).
+
+**Visual Studio Code** es un editor que incluye soporte para TypeScript aunque no incluye el compilador `tsc`. [Más información sobre VSCode y TypeScript](https://code.visualstudio.com/docs/typescript/typescript-tutorial).
 
 ## Tipos básicos
 
 Para que los programas sean útiles, debemos poder trabajar con algunas de las unidades de datos más simples: números, cadenas, estructuras, valores booleanos y similares. En [TypeScript](http://www.typescriptlang.org/docs/handbook/basic-types.html), se admite la mayoría de los tipos que se esperaría en JavaScript.
 
-El tipo de la variable se indica después del nombre. Se separa el nombre de la variable y el tipo mediante dos puntos ':', como por ejemplo `'let isDone: boolean = false'`.
+El tipo de la variable se indica después del nombre. Se separa el nombre de la variable y el tipo mediante dos puntos ':', como por ejemplo:
+
+```typescript
+let isDone: boolean = false;
+```
 
 Cuando una variable se define de un tipo, no se pueden asignar valores de otro tipo a esa variable. Si se intenta asignar otro tipo se obtiene un error en tiempo de compilación:
 
@@ -203,7 +182,7 @@ let sentence: string = "Hello, my name is " + fullName + ".\n\n" +
     "I'll be " + (age + 1) + " years old next month.";
 ```
 
-Cuando se compila a ES2015 o posterior, los _'template strings'_ están soportados nativamente, por lo que si en el fichero `tsconfig.json` le indicamos al compilador que el _target_ sea 'es2015' el código Javascript compilado será el mismo que el código Typescript. Se puede consultar el formato del fichero `tsconfig.json` [aquí](http://json.schemastore.org/tsconfig).
+Cuando se compila con `"target": "es5"` o posterior el fichero `tsconfig.json`, los **_'template strings'_** están soportados nativamente, por lo que el código Javascript compilado será el mismo que el código Typescript.
 
 ### Array
 
@@ -628,7 +607,7 @@ friend.lastName = "Huber"; // OK
 friend = { firstName: "x", lastName: "y" }; // Error: friend is const
 ```
 
-## Control flow
+## Control de flujo
 
 ### Estructuras condicionales
 
@@ -1644,9 +1623,9 @@ declare function printFirstName(friend: Friend): void;
 ## Resumen
 
 ```typescript
-// Existen 3 tipos básicos en TypeScript
+// Existen 3 tipos primitivos en TypeScript
 var isDone: boolean = false;
-var lines: number = 42;
+var lines: number = 42; // números enteros y decimales
 var name: string = "Anders";
 
 // Cuando es imposible de saber, tenemos el tipo "Any"
@@ -1813,6 +1792,12 @@ var tuple = pairToTuple({ item1: "hello", item2: "world" });
 - <https://github.com/semlinker/awesome-typescript>
 - <https://github.com/type-challenges/type-challenges>
 - <https://the-algorithms.com/language/typescript>
+- <https://www.tutorialsteacher.com/typescript>
+- <https://learntypescript.dev/>
+- <https://www.typescripttutorial.net/>
+- <https://devhints.io/typescript>
+- <https://www.w3schools.com/typescript/index.php>
+- <https://basarat.gitbook.io/typescript/>
 
 ## Licencia
 
