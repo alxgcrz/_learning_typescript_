@@ -3,7 +3,7 @@
 TypeScript es un lenguaje de programación de código abierto desarrollado por Microsoft y que se basa en JavaScript. TypeScript añade conceptos comunes como clases, módulos, interfaces, genéricos y (opcionalmente) tipado estático a JavaScript. TypeScript es **fuertemente tipado** ya que requiere de que se le especifiquen los tipos de
 datos que se quieren utilizar.
 
-TypeScript es un _superset_ de JavaScript: todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto.
+TypeScript es un **_superset_ de JavaScript**: todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto.
 
 El compilador TypeScript _"transpila"_ código escrito en TypeScript en código JavaScript válido y entendible por cualquier navegador que soporte Javascript.
 
@@ -132,7 +132,7 @@ isVisible = true; // assignment of bool
 isVisible = "hidden"; // Error: string not assignable to boolean
 ```
 
-### _`Boolean`_
+### boolean
 
 El tipo de datos más básico es el tipo `boolean` que admite los valores 'true/false':
 
@@ -140,9 +140,9 @@ El tipo de datos más básico es el tipo `boolean` que admite los valores 'true/
 let isDone: boolean = false;
 ```
 
-### _`Number`_
+### number
 
-Dado que TypeScript es un superconjunto de JavaScript, todos los números en TypeScript son números de 64bits en punto flotante. Estos números de punto flotante obtienen el tipo `number`. Además de los literales hexadecimales y decimales, TypeScript también admite literales binarios y octales introducidos en la especificación ES2015.
+Dado que TypeScript es un superconjunto de JavaScript, todos los números en TypeScript son **números de 64bits en punto flotante**. Estos números de punto flotante obtienen el tipo `number`. Además de los literales hexadecimales y decimales, TypeScript también admite literales binarios y octales introducidos en la especificación ES2015.
 
 ```typescript
 let width: number = 2;
@@ -152,7 +152,7 @@ let binary: number = 0b1010;
 let octal: number = 0o744;
 ```
 
-### _`String`_
+### string
 
 Para crear una variable de tipo cadena, usamos el tipo `string`, presente en infinidad de lenguajes. Al igual que JavaScript, TypeScript permite el uso de comillas dobles ("") o comillas simples ('') para rodear cadenas.
 
@@ -163,7 +163,7 @@ let name = "John";
 let firstName = "Doe";
 ```
 
-TypeScript tiene soporte para los _'template strings'_ como en Kotlin, que pueden abarcar varias líneas y tener expresiones incrustadas. Estas cadenas están rodeadas por el carácter de comillas invertidas o _'backquote'_ (\`), y las expresiones incrustadas tienen la forma `${expr}`:
+TypeScript, desde la versión 1.4, tiene soporte para los **_'template strings'_** como en Kotlin, que pueden abarcar varias líneas y tener expresiones incrustadas. Estas cadenas están rodeadas por el carácter de comillas invertidas o _'backquote'_ (\`), y las expresiones incrustadas tienen la forma `${expr}`:
 
 ```typescript
 let fullName: string = `Bob Bobbington`;
@@ -186,7 +186,9 @@ Cuando se compila con `"target": "es5"` o posterior el fichero `tsconfig.json`, 
 
 ### Array
 
-TypeScript, como JavaScript, permite trabajar con arrays de valores. Los arrays se pueden escribir de dos maneras. Una forma es indicar el tipo de los elementos seguidos de `[]` para indicar que es un array de elementos de ese tipo:
+TypeScript, como JavaScript, permite trabajar con arrays de valores. Los arrays pueden contener cualquier tipo de dato.
+
+Los arrays se pueden escribir de dos maneras. Una forma es indicar el tipo de los elementos seguidos de `[]` para indicar que es un array de elementos de ese tipo:
 
 ```typescript
 // Declaración e inicialización de un array
@@ -200,6 +202,20 @@ La otra forma es usar el tipo de array genérico, `Array<elemType>`:
 let list: Array<number> = [1, 2, 3];
 ```
 
+Es posible inicializar un array sin indicar el tipo, pero se pierde la ventaja del sistema de tipos de TypeScript:
+
+```typescript
+let arr = [1, 3, 'Apple', 'Orange', 'Banana', true, false];
+```
+
+Si necesitamos almacenar distintos tipos de datos en un array, podemos indicar los tipos para obtener la ventaja de tipos:
+
+```typescript
+let arr: (string | number | boolean)[] = [1, 3, 'Apple', 'Orange', 'Banana', true, false];
+// or
+let arr: Array<string | number | boolean> = [1, 3, 'Apple', 'Orange', 'Banana', true, false];
+```
+
 Podemos añadir valores a un array mediante `push()` o mediante asignación directa por posición:
 
 ```typescript
@@ -211,9 +227,7 @@ myArray.push(3);
 myArray[4] = 4;
 ```
 
-#### Iterar por un array con _`for...of`_ and _`for...in`_
-
-Para iterar por los valores de un array podemos usar un bucle `for-of`:
+Para **iterar** por los valores de un array podemos usar un bucle `for-of`:
 
 ```typescript
 let firstnames: string[] = ["Julia", "Anna", "Thomas"];
@@ -234,6 +248,12 @@ for (let index in firstnames) {
 // 0 – Julia
 // 1 – Anna
 // 2 – Thomas
+```
+
+Otra forma más compacta es utilizar el método `.forEach()` y las funciones flecha:
+
+```typescript
+firstnames.forEach(firstname => console.log(firstname));
 ```
 
 ### Tupla
@@ -267,9 +287,13 @@ x[3] = "world"; // Error, Property '3' does not exist on type '[string, number]'
 console.log(x[5].toString()); // Error, Property '5' does not exist on type '[string, number]'.
 ```
 
+Las tuplas son como arrays, por lo que se pueden utilizar los métodos disponibles en los arrays como `pop()`, `concat()`, etcétera...
+
 ### Enum
 
-Un añadido útil al conjunto estándar de tipos de datos de JavaScript es la enumeración. Al igual que en lenguajes como C# o Java, una enumeración es una forma de dar nombres más amigables a conjuntos de valores numéricos. Para acceder al valor de la enumeración, usamos su nombre seguido de un punto y el nombre de la variable miembro como por ejemplo `Color.Green` o `Color.Blue`:
+Un añadido útil al conjunto estándar de tipos de datos de JavaScript es la **enumeración**. Al igual que en lenguajes como C# o Java, una enumeración es una forma de dar nombres más amigables a conjuntos de valores numéricos.
+
+Para acceder al valor de la enumeración, usamos su nombre seguido de un punto y el nombre de la variable miembro como por ejemplo `Color.Green` o `Color.Blue`:
 
 ```typescript
 enum Color {
@@ -305,9 +329,9 @@ console.log(colorName); // Se muestra 'Green' que es nombre con valor 2
 console.log(valueColor); // Se muestra '2' que es el valor de 'Green'
 ```
 
-### Any
+### any
 
-En determinados escenarios es posible que tengamos que describir una variable con un tipo que es desconocido dado que su valor puede provenir de contenido dinámico, como por ejemplo, del usuario o de una biblioteca de terceros.
+En determinados escenarios es posible que tengamos que describir una variable con un tipo que es **desconocido** dado que su valor puede provenir de contenido dinámico, como por ejemplo, del usuario o de una biblioteca de terceros.
 
 En estos casos, podemos optar por indicar al compilador de TypeScript que no realice la verificación de tipos ni la existencia de sus miembros o métodos. Para ello, usamos el tipo `any`:
 
@@ -334,7 +358,9 @@ function printFirstName(friend) {
 }
 ```
 
-Cuando estamos migrando código Javascript legado, podemos indicar al compilador que nos marque como error (y que sea visible en el editor) si se lo indicamos con `"noImplicitAny": true` en el fichero `tsconfig.json`. De esta forma, para solucionar el error deberemos indicar de forma explícita el tipo `any` en el parámetro de la función. No es que el error se deba al tipo, ya que el tipo `any` es un tipo válido si no que se debe a que se debe indicar de forma explícita:
+Cuando estamos migrando código Javascript legado, podemos indicar al compilador que nos marque como error (y que sea visible en el editor) si se lo indicamos con `"noImplicitAny": true` en el fichero `tsconfig.json`.
+
+De esta forma, para solucionar el error deberemos indicar de forma explícita el tipo `any` en el parámetro de la función. No es que el error se deba al tipo, ya que el tipo `any` es un tipo válido si no que se debe a que se debe indicar de forma explícita:
 
 ```typescript
 // Ahora el parámetro 'friend' es de tipo 'any' de forma explícita
@@ -343,7 +369,7 @@ function printFirstName(friend: any) {
 }
 ```
 
-El tipo `any` también es útil si conoce alguna parte del tipo, pero tal vez no toda. Por ejemplo, puede tener un array pero el array tiene una mezcla de diferentes tipos, de forma que si indicamos `any` permitimos al array almacenar cualquier tipo:
+El tipo `any` también es útil si conoce alguna parte del tipo, pero tal vez no toda. Por ejemplo, puede tener un array con una mezcla de diferentes tipos, de forma que si indicamos `any` permitimos al array almacenar cualquier tipo:
 
 ```typescript
 let list: any[] = [1, true, "free"];
@@ -353,25 +379,7 @@ list[1] = 100;
 
 Para los casos en los que se tiene la información en tiempo de compilación, siempre es recomendable indicar el tipo de forma explícita en vez de emplear el tipo `any`, ya sea de forma explícita o implícita, ya que esto permitirá al compilador de TypeScript realizar la verificación de tipos y el soporte de herramientas como la finalización de declaraciones.
 
-#### Union Types
-
-En determinados escenarios podemos necesitar almacenar diferentes tipos en una misma variable pero queremos mantener acotado los tipos posibles. En vez de usar el tipo `any` que permitiría cualquier tipo podemos usar el _'union type'_. Este tipo es una combinación de los tipos posibles que admitirá la variable.
-
-Por ejemplo, definimos una variable usando el _'union type'_ `boolean|number` de forma que la variable sólo acepta valores de tipo `boolean` o `number`. Cualquier intento de asignar valores de otro tipo lanza un error:
-
-```typescript
-let isVisible: boolean | number = true;
-/* El compilador genera un error en tiempo de compilación 
-ya que el tipo 'boolean' no tiene la propiedad 'length' */
-console.log(isVisible.length); 
-
-isVisible = "Yes, is visible";
-/* Ahora el compilador no genera ningún error ya que 
-ahora la variable almacena un 'string' que sí tiene la propiedad 'length' */
-console.log(isVisible.length); 
-```
-
-### Void
+### void
 
 El tipo `void` es la ausencia de tener un tipo. Normalmente se utiliza como tipo de retorno de funciones que no devuelven un valor:
 
@@ -389,33 +397,7 @@ function warnUser() {
 }
 ```
 
-Declarar variables de tipo `void` no es útil porque solo puedes asignarles `undefined` o `null`:
-
-```typescript
-let unusable: void = undefined;
-```
-
-### 'Null' and 'Undefined'
-
-Indefinido y nulo son valores que en JavaScript conducen a muchos errores. En TypeScript, tanto los valores indefinidos como los valores nulos en realidad tienen sus propios tipos llamados `undefined` y `null` respectivamente. Al igual que `void`, no son extremadamente útiles por sí solos:
-
-```typescript
-// Not much else we can assign to these variables!
-let u: undefined = undefined;
-let n: null = null;
-```
-
-Por defecto, `null` y `undefined` son subtipos de todos los demás tipos. Eso significa que puede asignar `null` o `undefined` a algo como `number` o `string`:
-
-```typescript
-let firstName: string = "Thomas";
-firstName = null; // OK
-firstName = undefined; // OK
-```
-
-Sin embargo, cuando se usa el indicador `--strictNullChecks` o `"strictNullChecks": true` en el fichero `tsconfig.json`, los tipos `null` y `undefined` ya no se comportan como subtipos de todos los demás tipos y sólo se pueden asignar a una variable de uno de sus tipos respectivos (la única excepción es que `undefined` también se puede asignar a `void`).
-
-### Never
+### never
 
 El tipo `never` representa el tipo de valores que nunca ocurren. Por ejemplo, `never` es el tipo de retorno para una expresión de función o una expresión de función de flecha que siempre arroja una excepción o una que nunca devuelve un valor.
 
@@ -438,7 +420,7 @@ function infiniteLoop(): never {
 }
 ```
 
-### Object
+### object
 
 `Object` es un tipo que representa el tipo no primitivo, es decir, cualquier cosa que no sea `number`, `string`, `boolean`, `symbol`, `null`, o `undefined`.
 
@@ -466,6 +448,127 @@ console.log(myObject.value);
 console.dir(myObject)
 ```
 
+### symbol
+
+En TypeScript, el tipo `Symbol`, introducido en ECMAScript 2015, representa un tipo primitivo que es utilizado para crear identificadores únicos e inmutables. Cada valor de tipo `Symbol` es único, lo que significa que no hay dos símbolos que sean iguales lo que mejora la seguridad y evita colisiones de nombres.
+
+```typescript
+const simbolo1 = Symbol();
+const simbolo2 = Symbol('Mi descripción');
+```
+
+Dos símbolos nunca serán iguales, incluso si tienen la misma descripción:
+
+```typescript
+const simbolo1 = Symbol('clave');
+const simbolo2 = Symbol('clave');
+console.log(simbolo1 === simbolo2); // false
+```
+
+Los símbolos se pueden utilizar como claves para propiedades de objetos, proporcionando un nivel adicional de seguridad para evitar colisiones de nombres de propiedades:
+
+```typescript
+const miSimbolo = Symbol('miSimbolo');
+const obj = {
+  [miSimbolo]: 'Valor asociado al símbolo',
+};
+
+console.log(obj[miSimbolo]); // 'Valor asociado al símbolo'
+```
+
+### Union Type
+
+En determinados escenarios podemos necesitar almacenar **diferentes tipos en una misma variable** pero queremos mantener acotado los tipos posibles. En vez de usar el tipo `any` que permitiría cualquier tipo podemos usar el **_'union type'_**. Este tipo es una combinación de los tipos posibles que admitirá la variable.
+
+Por ejemplo, definimos una variable usando el _'union type'_ `boolean|number` de forma que la variable sólo acepta valores de tipo `boolean` o `number`. Cualquier intento de asignar valores de otro tipo lanza un error:
+
+```typescript
+let isVisible: boolean | number = true;
+/* El compilador genera un error en tiempo de compilación 
+ya que el tipo 'boolean' no tiene la propiedad 'length' */
+console.log(isVisible.length); 
+
+isVisible = "Yes, is visible";
+/* Ahora el compilador no genera ningún error ya que 
+ahora la variable almacena un 'string' que sí tiene la propiedad 'length' */
+console.log(isVisible.length); 
+```
+
+Puede usarse los paréntesis para indicar los tipos. Ambas formas están aceptadas:
+
+```typescript
+let isVisible: boolean | number = true;
+// or
+let isVisible: (boolean | number) = true;
+```
+
+Una utilidad muy interesante es utilizar este tipo en una función:
+
+```typescript
+function add(a: number | string, b: number | string) {
+    if (typeof a === 'number' && typeof b === 'number') {
+        return a + b;
+    }
+    if (typeof a === 'string' && typeof b === 'string') {
+        return a.concat(b);
+    }
+    throw new Error('Parameters must be numbers or strings');
+}
+```
+
+### Intersection Type
+
+Un tipo de intersección o **_intersection type_** crea un nuevo tipo combinando múltiples tipos existentes. El nuevo tipo tiene todas las características de los tipos existentes:
+
+```typescript
+// The 'typeAB' will have all properties from both 'typeA' and 'typeB'.
+type typeAB = typeA & typeB;
+```
+
+### Type Aliases
+
+Los alias de tipos o **_Type Alias_** permiten crear un nuevo nombre para un tipo existente:
+
+```typescript
+type Name = string;
+type Age = number;
+type User = { name: Name; age: Age };
+
+const user: User = { name: 'John', age: 30 };
+```
+
+En realidad se puede utilizar un tipo de alias para dar un nombre a cualquier tipo en absoluto, no sólo un tipo de objeto. Por ejemplo, un tipo de alias puede nombrar un tipo de unión:
+
+```typescript
+type ID = number | string;
+```
+
+Declarar variables de tipo `void` no es útil porque solo puedes asignarles `undefined` o `null`:
+
+```typescript
+let unusable: void = undefined;
+```
+
+### Indefinido y Nulo
+
+Indefinido y nulo son valores que en JavaScript conducen a muchos errores. En TypeScript, tanto los valores indefinidos como los valores nulos en realidad tienen sus propios tipos llamados `undefined` y `null` respectivamente. Al igual que `void`, no son extremadamente útiles por sí solos:
+
+```typescript
+// Not much else we can assign to these variables!
+let u: undefined = undefined;
+let n: null = null;
+```
+
+Por defecto, `null` y `undefined` son subtipos de todos los demás tipos. Eso significa que puede asignar `null` o `undefined` a algo como `number` o `string`:
+
+```typescript
+let firstName: string = "Thomas";
+firstName = null; // OK
+firstName = undefined; // OK
+```
+
+Sin embargo, cuando se usa el indicador `--strictNullChecks` o `"strictNullChecks": true` en el fichero `tsconfig.json`, los tipos `null` y `undefined` ya no se comportan como subtipos de todos los demás tipos y sólo se pueden asignar a una variable de uno de sus tipos respectivos (la única excepción es que `undefined` también se puede asignar a `void`).
+
 ### Aserciones de tipo
 
 Una aserción de tipo es como una conversión de tipo en otros lenguajes, pero no realiza ninguna verificación especial o reestructuración de datos. Se utiliza la palabra clave `as`:
@@ -489,6 +592,29 @@ Además, el autocompletado del editor autocompleta correctamente el nombre de la
 let strLength: number = (someValue as string).length; 
 ```
 
+### Aserciones no nulables
+
+El **_Non-null assertion operator_** en TypeScript es representado por el operador de exclamación (`!`). Este operador se utiliza para indicar al compilador que cierta expresión no será `null` ni `undefined`. Esencialmente, es una afirmación por parte del programador de que sabe que el valor nunca será nulo o indefinido en un punto específico del código.
+
+Este operador es útil en situaciones en las que el compilador TypeScript no puede inferir que una variable no será nula, pero el programador tiene conocimiento de que no lo será.
+
+```typescript
+let cadena: string | null = obtenerCadena();
+
+// Usando el operador de exclamación para afirmar que 'cadena' no es nulo
+let longitud: number = cadena!.length;
+
+// Función que devuelve una cadena o null
+function obtenerCadena(): string | null {
+  // ... lógica para obtener una cadena o null
+  return "Hola, mundo";
+}
+```
+
+En el ejemplo, si _'cadena'_ fuera null en tiempo de ejecución, se lanzaría un error en tiempo de ejecución (`TypeError`), ya que se está intentando acceder a una propiedad (_'length'_) de algo que es `null` o `undefined`.
+
+Es importante usar este operador con precaución, ya que estás anulando la verificación de nulabilidad del compilador.
+
 ## Declaración de variables
 
 Las variables en JavaScript siempre se han declarado con la palabra clave `var`. En la especificación ES2015 se introdujeron las nuevas palabras clave `let` y `const`, que por supuesto también están disponibles en TypeScript. Se recomienda usar `let` y `const` en lugar de `var`.
@@ -510,7 +636,7 @@ La diferencia radica en el alcance de cada variable según como su definición. 
 
 #### Alcance de bloque
 
-Las variables declaradas con `var` tienen un alcance de función o _'function-scoped'_ mientras que las variables declaradas con `let` tienen un alcance de bloque o _'block-scoped'_ que es más parecido a Java.
+Las variables declaradas con `var` tienen un alcance de función o **_'function-scoped'_** mientras que las variables declaradas con `let` tienen un alcance de bloque o **_'block-scoped'_** que es más parecido a Java.
 
 En el siguiente ejemplo tenemos una variable declarada con `var` dentro del ámbito de un `if`, lo que se traduce en que la variable es accesible desde cualquier punto de la función, tanto dentro como fuera del ámbito del `if` donde fue declarada:
 
@@ -591,7 +717,7 @@ log(); // Ahora se usará realmente la variable, después de su declaración y p
 
 ### Uso de `const`
 
-Todas las reglas aplicables a `let` se aplican también a `const`. Las variables declaradas con `const` son también variables con un alcance de bloque o _'block-scoped'_. La única diferencia con `let` es que la variable declarada con `const` sólo se le puede asignar un valor una sola vez y esta asignación se debe hacer en la declaración de la variable. Por tanto, si tenemos una variable cuyo valor no va a cambiar en el tiempo debemos declararla como `const`:
+Todas las reglas aplicables a `let` se aplican también a `const`. Las variables declaradas con `const` son también variables con un alcance de bloque o **_'block-scoped'_**. La única diferencia con `let` es que la variable declarada con `const` sólo se le puede asignar un valor una sola vez y esta asignación se debe hacer en la declaración de la variable. Por tanto, si tenemos una variable cuyo valor no va a cambiar en el tiempo debemos declararla como `const`:
 
 ```typescript
 const firstName: string = "John";
@@ -607,12 +733,19 @@ friend.lastName = "Huber"; // OK
 friend = { firstName: "x", lastName: "y" }; // Error: friend is const
 ```
 
+Las constantes `const` se deben declarar e inicializar en la misma declaración:
+
+```typescript
+const num:number; //Compiler Error: const declaration must be initialized
+num = 100; 
+```
+
 ## Control de flujo
 
 ### Estructuras condicionales
 
 ```typescript
-// 'if' statement
+// Bucle 'if'
 const age = 21;
 
 if (age > 40) {
@@ -624,7 +757,10 @@ if (age > 40) {
  // Code to execute in all other cases
 }
 
-// 'switch'
+// Operador ternario (igual que Java)
+age >= 18 ? console.log("Mayor de edad") : console.log("Menor");
+
+// Bucle 'switch'
 const styles = {
   tranditional: 1,
   modern: 2,
@@ -646,6 +782,7 @@ switch (style) {
     // Code to execute for futuristic style
     break;
   default:
+    // Optional block
     throw new Error('Style not known: ' + style);
 }
 ```
@@ -653,18 +790,36 @@ switch (style) {
 ### Estructuras de tipo bucle
 
 ```typescript
-// 'for' loop
+// Bucle 'for'
 const names = ['Lily', 'Rebecca', 'Debbye', 'Ann'];
 
 for (let i = 0; i < names.length; i++) {
   console.log(names[i]);
 }
 
-for (let name in names) {
- console.log(name);
+// Bucle 'for...in' para arrays, listas o tuplas. Retorna el índice en cada interación
+for (let index in names) {
+ console.log(index);
 }
+// Prints: 
+// 0
+// 1
+// 2
+// 3
 
-// 'while' loop
+// Bucle 'for...of' para arrays, listas o tuplas. Accede al elemento en cada interación 
+for (let name of names) {
+  console.log(name);
+}
+// Prints:
+// Lily
+// Rebecca
+// Debbye
+// Ann
+```
+
+```typescript
+// Bucle 'while'
 let counter = 10;
 
 while (counter > 0) {
@@ -672,7 +827,7 @@ while (counter > 0) {
   console.log(counter);
 }
 
-// 'do-while' loop
+// Bucle 'do-while'
 do {
   counter--;
   console.log(counter);
@@ -1127,29 +1282,33 @@ console.log(second); // Prints '2'
 
 ## Funciones
 
-Las [funciones](http://www.typescriptlang.org/docs/handbook/functions.html) son la base fundamental de cualquier aplicación en JavaScript. En TypeScript, aunque hay clases, espacios de nombres y módulos, las funciones siguen desempeñando un papel clave en la descripción de cómo hacer las cosas. TypeScript también agrega algunas capacidades nuevas a las funciones estándar de JavaScript para que sea más fácil trabajar con ellas.
+Las funciones son la base fundamental de cualquier aplicación en JavaScript dado que JavaScript es un lenguaje de programación funcional.
+
+En TypeScript, aunque hay clases, espacios de nombres y módulos, las [funciones](http://www.typescriptlang.org/docs/handbook/functions.html) siguen desempeñando un papel clave en la descripción de cómo hacer las cosas. TypeScript también agrega algunas capacidades nuevas a las funciones estándar de JavaScript para que sea más fácil trabajar con ellas.
 
 ### Tipos de funciones
 
 Javascript soporta dos tipos de funciones:
 
-- Funciones con nombre o _'named functions'_:
+- Funciones con nombre o **_'named functions'_**:
 
 ```typescript
 // 'Named function'
 function multiply(x, y) {
   return x * y;
 }
+
+multiply(5, 3);
 ```
 
-- Funciones anónimas o _'anonymous functions'_:
+- Funciones anónimas o **_'anonymous functions'_**:
 
 ```typescript
 // Anonymous function
 let add = function(x, y) { return x + y; };
 ```
 
-Las funciones anónimas no tienen un nombre que permita hacer referencia a la función y así poder invocarla pero pueden ser asignadas a una variable. Una vez asignada a una variable, puede ser llamada igual que una función con nombre:
+Las funciones anónimas no tienen un nombre que permita hacer referencia a la función y así poder invocarla por lo que se asignan a una variable para poder ser invocadas:
 
 ```typescript
 let resultMul = multiply(3, 3); // Función con nombre
@@ -1163,16 +1322,13 @@ Con TypeScript podemos indicar de forma explícita el tipo de los parámetros o 
 function multiply(x: number, y: number): number {
   return x * y;
 }
-
-// Anonymous function
-let add: (baseValue: number, increment: number) => number = function(x: number, y: number): number { return x + y; };
-
-// Esta parte '(baseValue: number, increment: number) => number' es el tipo de la variable 'add', es decir es de tipo 'function'.
 ```
 
 ### Parámetros opcionales
 
-En Javascript se pueden omitir parámetros en la llamada de la función mientras que en TypeScript no se puede. Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
+En Javascript se pueden omitir parámetros en la llamada de la función mientras que en TypeScript no se puede.
+
+Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, lastName?: string) {
@@ -1192,7 +1348,9 @@ La única regla cuando usamos parámetros opcionales es que los **parámetros ob
 
 ### Valores por defecto
 
-Hay situaciones en que podemos necesitar que un parámetro tenga un valor por defecto si no se informa un valor en la llamada a la función. Si le asignamos un valor por defecto a un parámetro pasa de ser obligatorio a ser opcional debido a que ya no es obligatorio que sea informado:
+Hay situaciones en que podemos necesitar que un parámetro tenga un **valor por defecto** si no se informa un valor en la llamada a la función.
+
+Si le asignamos un valor por defecto a un parámetro pasa de ser obligatorio a ser opcional ya que al no ser informado, se utilizará el valor por defecto:
 
 ```typescript
 function getFullName(firstName: string = "John", lastName?: string) {
@@ -1205,7 +1363,7 @@ function getFullName(firstName: string = "John", lastName?: string) {
 
 console.log(getFullName("John", "Doe"));
 console.log(getFullName("John"));
-console.log(getFullName()); // Ahora si podemos hacer una llamada sin parámetros, ya que el obligatorio tiene valor por defecto
+console.log(getFullName()); // El parámetro obligatorio tiene valor por defecto
 console.log(getFullName(undefined, "Doe"));
 ```
 
@@ -1222,7 +1380,9 @@ function getFullName(firstName?: string = "John") {
 
 ### Número variable de parámetros
 
-En determinadas situaciones podemos necesitar que una función acepte un número variable de parámetros. Al igual que Java o Kotlin, TypeScript permite el paso de un número variable de parámetros. En TypeScript se llama [_'rest parameters'_](http://www.typescriptlang.org/docs/handbook/functions.html#rest-parameters) y se indica mediante tres puntos (...) delante del nombre del parámetro:
+En determinadas situaciones podemos necesitar que una función acepte un número variable de parámetros. Al igual que Java o Kotlin, TypeScript permite el paso de un número variable de parámetros.
+
+En TypeScript se llama [**_'rest parameters'_**](http://www.typescriptlang.org/docs/handbook/functions.html#rest-parameters) y se indica mediante tres puntos (...) delante del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, ...moreNames: string[]) {
@@ -1243,6 +1403,66 @@ Si tenemos un array de cadenas, podemos hacer la llamada a la función añadiend
 ```typescript
 let additionalNames: string[]= ["Claudius", "Huber", "Developer"];
 console.log(getFullName("Thomas", ...additionalNames));
+```
+
+### Sobrecarga de métodos
+
+Al igual que Java, la sobrecarga de funciones en TypeScript permite definir múltiples funciones con el mismo nombre pero con diferentes parámetros. La función correcta de llamada se determina en función del número, tipo y orden de los argumentos pasados a la función en tiempo de ejecución:
+
+```typescript
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+
+function add(a: any, b: any): any {
+  return a + b;
+}
+
+console.log(add(1, 2)); // 3
+console.log(add('Hello', ' World')); // "Hello World"
+```
+
+### Funciones flecha
+
+La notación de **función flecha** se puede utilizar en TypeScript, al igual que en JavaScript. En otros lenguajes también reciben el nombre de **funciones lambda**.
+
+Esta notación se puede usar en funciones anónimas. Al utilizar el operador flecha `=>' se elimina la necesidad de utilizar la palabra _'function'_.
+
+Los parámetros se pasan entre paréntesis y la expresión de la función se encierran entre llaves `{}`.
+
+```typescript
+let sum = (x, y) => { return x + y };
+```
+
+Si la expresión consiste en una única expresión, no es necesario el uso de llaves ni la palabra `return`:
+
+```typescript
+let sum = (x, y) => x + y;
+```
+
+TypeScript puede inferir los tipos en las funciones flecha al igual que en cualquier otra función. Sin embargo, también se puede indicar los tipos:
+
+```typescript
+let sum = (x: number, y: number): number => x + y;
+```
+
+### Definir el tipo de una función
+
+En TypeScript, las _"function type expressions"_ se utilizan para definir tipos de funciones. Esto es útil para especificar el tipo de una función, ya sea para propósitos de documentación, para definir interfaces o para otros casos de uso:
+
+```typescript
+// Definición de un tipo de función llamado 'Operacion'
+type Operacion = (a: number, b: number) => number;
+
+// Función que sigue el tipo definido anteriormente
+const suma: Operacion = (a, b) => a + b;
+const resta: Operacion = (a, b) => a - b;
+
+// Ejemplo de uso
+const resultadoSuma = suma(5, 3); // resultadoSuma es de tipo number
+const resultadoResta = resta(8, 2); // resultadoResta es de tipo number
+
+console.log(resultadoSuma); // Salida esperada: 8
+console.log(resultadoResta); // Salida esperada: 6
 ```
 
 ### 'Async' y 'Await'
@@ -1795,7 +2015,6 @@ var tuple = pairToTuple({ item1: "hello", item2: "world" });
 - <https://www.tutorialsteacher.com/typescript>
 - <https://learntypescript.dev/>
 - <https://www.typescripttutorial.net/>
-- <https://devhints.io/typescript>
 - <https://www.w3schools.com/typescript/index.php>
 - <https://basarat.gitbook.io/typescript/>
 
