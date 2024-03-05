@@ -1,11 +1,16 @@
 # TypeScript
 
-TypeScript es un lenguaje de programación de código abierto desarrollado por Microsoft y que se basa en JavaScript. TypeScript añade conceptos comunes como clases, módulos, interfaces, genéricos y (opcionalmente) tipado estático a JavaScript. TypeScript es **fuertemente tipado** ya que requiere de que se le especifiquen los tipos de
-datos que se quieren utilizar.
+TypeScript es un lenguaje de programación de código abierto desarrollado por Microsoft y que se basa en JavaScript. **TypeScript es un _superset_ de JavaScript**,
 
-TypeScript es un **_superset_ de JavaScript**: todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto.
+TypeScript amplía la sintaxis de JavaScript y añade conceptos comunes como clases, interfaces, genéricos, _'namespaces'_ y (opcionalmente) tipado estático a JavaScript.
 
-El compilador TypeScript _"transpila"_ código escrito en TypeScript en código JavaScript válido y entendible por cualquier navegador que soporte Javascript.
+TypeScript está **fuertemente tipado** ya que permite especificar el tipo de dato en variables, parámetros de función y/o retornos de funciones.
+
+TypeScript es completamente compatible con JavaScript. Todo el código JavaScript es código válido en TypeScript de manera que se puede integrar fácilmente a cualquier proyecto.
+
+Además, se puede utilizar bibliotecas de JavaScript en proyectos de TypeScript incluyendo los archivos JavaScript directamente o utilizando definiciones de tipo para la biblioteca. Las definiciones de tipos proporcionan información de tipos para las bibliotecas de JavaScript, lo que facilita su uso en TypeScript.
+
+El compilador TypeScript _"transpila"_ código escrito en TypeScript en código JavaScript válido y entendible por cualquier navegador o entorno que soporte y pueda ejecutar código Javascript.
 
 ## Instalación
 
@@ -35,20 +40,32 @@ tsc -v
 
 ## Usando TypeScript
 
-Para compilar un fichero TypeScript llamado `main.ts` escribimos en el terminal:
+Para compilar un fichero TypeScript con extensión `.ts` escribimos en el terminal:
 
 ```sh
-tsc main.ts
+// Compilar fichero con las opciones por defecto
+tsc <fileName>.ts
+
+// Compilar cualquier fichero con las opciones por defecto
+tsc src/*.ts
+
+// Mostrar todas las opciones
+tsc --all
+
+// Invocar el compilador con parámetros
+tsc <fileName>.ts --target ES5 --module commonjs
 ```
 
-Para no tener que compilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que compilará el fichero TypeScript cada vez que detecte un cambio. :
+Para no tener que compilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que compilará el fichero TypeScript cada vez que detecte un cambio:
 
 ```sh
 // Se finaliza el proceso con 'Ctrl + C'
 tsc main.ts -w
 ```
 
-Para inicializar un proyecto TypeScript, escribimos por terminal dentro de la carpeta del proyecto:
+[Más información](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+
+Para **inicializar** un proyecto TypeScript, escribimos por terminal dentro de la carpeta del proyecto:
 
 ```sh
 tsc --init
@@ -59,11 +76,14 @@ Esto crea un fichero `tsconfig.json` con las opciones por defecto. La presencia 
 ```json
 {
   "compilerOptions": {
-    "module": "commonjs",
     "target": "es5",
-    "noImplicitAny": false,
-    "sourceMap": true
-  }
+    "module": "commonjs",
+    "strict": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"]
 }
 ```
 
@@ -85,7 +105,7 @@ Algunas opciones son:
 
 [Más información sobre este fichero 'tsconfig.json'](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
-Es importante indicar que cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, no se debe indicar el nombre del fichero o los ficheros con el código Typescript, ya que compilará todos los ficheros `.ts` del proyecto.
+Cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, **no es necesario** indicar el nombre del fichero o ficheros con el código Typescript, ya que se compilarán todos los ficheros `.ts` del proyecto. Si se indica el nombre del fichero `.ts`, se ignora el fichero `tsconfig.json` y su contenido.
 
 Para depurar el código TypeScript en el navegador, debemos utilizar un fichero `*.map` de forma que el navegador pueda relacionar el código Javascript que está ejecutando con el código fuente escrito en TypeScript. Este fichero se genera indicando `"sourceMap": true` en el fichero de configuración `tsconfig.json`.
 
@@ -137,7 +157,8 @@ isVisible = "hidden"; // Error: string not assignable to boolean
 El tipo de datos más básico es el tipo `boolean` que admite los valores 'true/false':
 
 ```typescript
-let isDone: boolean = false;
+let isTrue: boolean = true;
+let isFalse: boolean = false;
 ```
 
 ### number
@@ -256,6 +277,8 @@ Otra forma más compacta es utilizar el método `.forEach()` y las funciones fle
 firstnames.forEach(firstname => console.log(firstname));
 ```
 
+[Más información](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)
+
 ### Tupla
 
 Las tuplas permiten expresar un array con un número fijo de elementos cuyos tipos son conocidos, aunque no necesariamente iguales. Por ejemplo, podemos usar una tupla para representar un valor que se compone de un `string` y un `number`, de forma que el `string` está en el índice 0 y el `number` está en el índice 1. El compilador conoce esto y puede realizar las comprobaciones al asignar nuevos valores:
@@ -289,6 +312,8 @@ console.log(x[5].toString()); // Error, Property '5' does not exist on type '[st
 
 Las tuplas son como arrays, por lo que se pueden utilizar los métodos disponibles en los arrays como `pop()`, `concat()`, etcétera...
 
+[Más información](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types)
+
 ### Enum
 
 Un añadido útil al conjunto estándar de tipos de datos de JavaScript es la **enumeración**. Al igual que en lenguajes como C# o Java, una enumeración es una forma de dar nombres más amigables a conjuntos de valores numéricos.
@@ -304,7 +329,7 @@ enum Color {
 let c: Color = Color.Green;
 ```
 
-De forma predeterminada, las enumeraciones comienzan a numerar sus miembros a partir de 0. Puede cambiar esto configurando manualmente el valor de uno de sus miembros. Por ejemplo, podemos comenzar el ejemplo anterior en 1 en lugar de 0:
+De forma predeterminada, las enumeraciones comienzan a numerar sus miembros a partir de 0 y son **auto-incrementales**. Sin embargo, podemos asignar un valor a uno de los miembros y el resto tomará el valor correspondiente a partir del valor indicado:
 
 ```typescript
 enum Color {Red = 1, Green, Blue}
@@ -329,6 +354,24 @@ console.log(colorName); // Se muestra 'Green' que es nombre con valor 2
 console.log(valueColor); // Se muestra '2' que es el valor de 'Green'
 ```
 
+Además de valores numéricos, TypeScript permite enumeraciones con cadenas y/o enumeraciones heterogéneas:
+
+```typescript
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT",
+}
+
+enum BooleanLikeHeterogeneousEnum {
+  No = 0,
+  Yes = "YES",
+}
+```
+
+[Más información](https://www.typescriptlang.org/docs/handbook/enums.html)
+
 ### any
 
 En determinados escenarios es posible que tengamos que describir una variable con un tipo que es **desconocido** dado que su valor puede provenir de contenido dinámico, como por ejemplo, del usuario o de una biblioteca de terceros.
@@ -347,7 +390,7 @@ dado que el tipo boolean no tiene el atributo 'length' */
 console.log(notSure.length); 
 ```
 
-El tipo `any` es una forma poderosa de trabajar con código JavaScript existente, permitiéndole optar gradualmente por la verificación de tipos durante la compilación.
+El tipo `any` es una forma poderosa de trabajar con código JavaScript existente, permitiéndo optar gradualmente por la verificación de tipos durante la compilación.
 
 Además de las variables, el tipo `any` es especialmente importante en los parámetros de las funciones. Si no se especifica el tipo, los parámetros son implícitamente de tipo `any`:
 
@@ -358,9 +401,9 @@ function printFirstName(friend) {
 }
 ```
 
-Cuando estamos migrando código Javascript legado, podemos indicar al compilador que nos marque como error (y que sea visible en el editor) si se lo indicamos con `"noImplicitAny": true` en el fichero `tsconfig.json`.
+Cuando se migra código Javascript heredado, es posible indicar al compilador que marque como error (y que sea visible en el editor) si se habilita `"noImplicitAny": true` en el fichero `tsconfig.json`.
 
-De esta forma, para solucionar el error deberemos indicar de forma explícita el tipo `any` en el parámetro de la función. No es que el error se deba al tipo, ya que el tipo `any` es un tipo válido si no que se debe a que se debe indicar de forma explícita:
+De esta forma, para solucionar el error deberemos indicar de forma explícita el tipo `any` en el parámetro de la función. El error en sí no se debe al tipo, ya que el tipo `any` es un tipo válido si no que tiene su origen en que se debe indicar de forma explícita:
 
 ```typescript
 // Ahora el parámetro 'friend' es de tipo 'any' de forma explícita
@@ -379,6 +422,39 @@ list[1] = 100;
 
 Para los casos en los que se tiene la información en tiempo de compilación, siempre es recomendable indicar el tipo de forma explícita en vez de emplear el tipo `any`, ya sea de forma explícita o implícita, ya que esto permitirá al compilador de TypeScript realizar la verificación de tipos y el soporte de herramientas como la finalización de declaraciones.
 
+[Más información](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any)
+
+### unknown
+
+TypeScript 3.0 introduce un nuevo tipo llamado `unknown`. Este tipo es la contrapartida segura del tipo `any`.
+
+Este tipo `unknown` se utiliza para representar un tipo de valor que aún no se conoce durante el tiempo de compilación.
+
+A diferencia de `any`, `unknown` es más seguro ya que obliga a realizar comprobaciones de tipo antes de realizar operaciones con valores de este tipo.
+
+```typescript
+let userInput: unknown;
+
+// Verificación de tipo antes de realizar operaciones.
+if (typeof userInput === "string") {
+    let length: number = userInput.length; // Correcto
+}
+```
+
+Este tipo sólo se puede asignar a sí mismo o al tipo `any`:
+
+```typescript
+function f22(x: unknown) {
+  let v1: any = x;
+  let v2: unknown = x;
+  let v3: object = x; // Error
+  let v4: string = x; // Error
+  let v5: string[] = x; // Error
+  let v6: {} = x; // Error
+  let v7: {} | null | undefined = x; // Error
+}
+```
+
 ### void
 
 El tipo `void` es la ausencia de tener un tipo. Normalmente se utiliza como tipo de retorno de funciones que no devuelven un valor:
@@ -396,6 +472,8 @@ function warnUser() {
   console.log("This is my warning message");
 }
 ```
+
+Por contra, en JavaScript, cuando una función no retorna ningún valor, implícitamente retorna el valor `undefined`. Para TypeScript, `void` y `undefined` no son la misma cosa.
 
 ### never
 
@@ -420,9 +498,11 @@ function infiniteLoop(): never {
 }
 ```
 
+[Más información](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type)
+
 ### object
 
-`Object` es un tipo que representa el tipo no primitivo, es decir, cualquier cosa que no sea `number`, `string`, `boolean`, `symbol`, `null`, o `undefined`.
+El tipo `object` es un tipo que representa el tipo no primitivo, es decir, cualquier cosa que no sea `number`, `string`, `boolean`, `symbol`, `null`, o `undefined`.
 
 ```typescript
 declare function create(o: object | null): void;
@@ -447,6 +527,8 @@ const myObject = {
 console.log(myObject.value);
 console.dir(myObject)
 ```
+
+[Más información](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#object-types)
 
 ### symbol
 
@@ -475,6 +557,8 @@ const obj = {
 
 console.log(obj[miSimbolo]); // 'Valor asociado al símbolo'
 ```
+
+[Más información](https://www.typescriptlang.org/docs/handbook/symbols.html)
 
 ### Union Type
 
@@ -527,7 +611,7 @@ type typeAB = typeA & typeB;
 
 ### Type Aliases
 
-Los alias de tipos o **_Type Alias_** permiten crear un nuevo nombre para un tipo existente:
+Los alias de tipos o **_"Type Alias"_** permiten crear un nuevo nombre para un tipo existente:
 
 ```typescript
 type Name = string;
@@ -559,7 +643,7 @@ let u: undefined = undefined;
 let n: null = null;
 ```
 
-Por defecto, `null` y `undefined` son subtipos de todos los demás tipos. Eso significa que puede asignar `null` o `undefined` a algo como `number` o `string`:
+Por defecto, `null` y `undefined` son subtipos de todos los demás tipos. Eso significa que se puede asignar `null` o `undefined` a algo como `number` o `string`:
 
 ```typescript
 let firstName: string = "Thomas";
@@ -567,7 +651,18 @@ firstName = null; // OK
 firstName = undefined; // OK
 ```
 
-Sin embargo, cuando se usa el indicador `--strictNullChecks` o `"strictNullChecks": true` en el fichero `tsconfig.json`, los tipos `null` y `undefined` ya no se comportan como subtipos de todos los demás tipos y sólo se pueden asignar a una variable de uno de sus tipos respectivos (la única excepción es que `undefined` también se puede asignar a `void`).
+Cómo se comporten estos tipos depende de si la opción `strictNullChecks` está habilitada o no.
+
+Cuando se usa el indicador `--strictNullChecks` o `"strictNullChecks": true` en el fichero `tsconfig.json`, los tipos `null` y `undefined` ya no se comportan como subtipos de todos los demás tipos y sólo se pueden asignar a una variable de uno de sus tipos respectivos (la única excepción es que `undefined` también se puede asignar a `void`).
+
+Es decir, cuando `strictNullChecks` está activado, las variables por defecto son tratadas como si no pudieran ser nulas o indefinidas. Esto significa que si se intenta acceder a propiedades o métodos en una variable que podría ser nula o indefinida, TypeScript emitirá un error para advertir sobre la posibilidad de un valor no deseado:
+
+```typescript
+let nombre: string;
+let longitud: number = nombre.length;  // Error: Object is possibly 'undefined'.
+```
+
+Esta opción es parte de la suite _"strict"_ en TypeScript, que se enfoca en mejorar la seguridad y la robustez del código. Se puede activar la suite completa con `"strict": false` en el fichero `tsconfig.json` o habilitar/deshabilitar cada opción por separado.
 
 ### Aserciones de tipo
 
@@ -844,7 +939,7 @@ Una [interfaz](http://www.typescriptlang.org/docs/handbook/interfaces.html) es u
 
 Uno de los principios básicos de TypeScript es la verificación de tipos. Dado que una interfaz es solo un tipo sin implementación, es una forma poderosa de crear contratos de forma que si no se satisface la interfaz, TypeScript mostrará un error en tiempo de compilación.
 
-Como ejemplo, cuando una función define un parámetro sin un tipo explícito, el compilador le asigna el tipo `any` como ya vimos, con lo cual el compilador no puede realizar ninguna verificación de tipos y nuestro código es propenso a errores:
+Como ejemplo, cuando una función define un parámetro sin un tipo explícito, el compilador le asigna el tipo `any`, con lo cual el compilador no puede realizar ninguna verificación de tipos y nuestro código es propenso a errores:
 
 ```typescript
 // Función con el parámetro 'friend' de tipo 'any'
