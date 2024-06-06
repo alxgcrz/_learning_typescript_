@@ -44,10 +44,13 @@ Para compilar un fichero TypeScript con extensión `.ts` escribimos en el termin
 
 ```sh
 // Compilar fichero con las opciones por defecto
-tsc <fileName>.ts
+tsc {fileName}.ts
 
 // Compilar cualquier fichero con las opciones por defecto
 tsc src/*.ts
+
+// Compilar un fichero en una ubicación determinada
+tsc {fileName}.ts --outfile out/{filename}.js
 
 // Mostrar todas las opciones
 tsc --all
@@ -56,7 +59,7 @@ tsc --all
 tsc <fileName>.ts --target ES5 --module commonjs
 ```
 
-Para no tener que compilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que compilará el fichero TypeScript cada vez que detecte un cambio:
+Para no tener que compilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que compilará el fichero TypeScript indicado cada vez que detecte un cambio:
 
 ```sh
 // Se finaliza el proceso con 'Ctrl + C'
@@ -93,11 +96,11 @@ Algunas opciones son:
 
 - **`module`**: el sistema de módulos a utilizar
 
-- **`strict`**: habilitar/deshabilitar todas las opciones estrictas de comprobación de tipos
+- **`strict`**: habilitar/deshabilitar todas las opciones estrictas de comprobación de tipos (**recomendable** que esté activado)
 
 - **`outDir`**: el directorio de salida de los ficheros JavaScript compilados
 
-- **`rootDir`**: la carpeta raíz donde se ubican los ficheros TypeScript
+- **`rootDir`**: la carpeta raíz donde se ubican los ficheros TypeScript del proyecto
 
 - **`noImplicitAny`**: habilitar/deshabilitar la generación de informes de error para expresiones y declaraciones con un tipo 'any' implícito
 
@@ -106,6 +109,16 @@ Algunas opciones son:
 [Más información sobre este fichero 'tsconfig.json'](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
 Cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, **no es necesario** indicar el nombre del fichero o ficheros con el código Typescript, ya que se compilarán todos los ficheros `.ts` del proyecto. Si se indica el nombre del fichero `.ts`, se ignora el fichero `tsconfig.json` y su contenido.
+
+Por tanto, una vez inicializado el proyecto, podemos arrancar el compilador TypeScript en modo _"observable"_ sin necesidad de indicar un fichero **.ts** ya que realizará la compilación de todos los ficheros de la carpeta `rootDir`:
+
+```sh
+// Inicializar el proyecto TypeScript
+$ tsc --init
+
+// Arrancar en modo "observable" todo el proyecto
+$ tsc -w
+```
 
 Para depurar el código TypeScript en el navegador, debemos utilizar un fichero `*.map` de forma que el navegador pueda relacionar el código Javascript que está ejecutando con el código fuente escrito en TypeScript. Este fichero se genera indicando `"sourceMap": true` en el fichero de configuración `tsconfig.json`.
 
@@ -1218,9 +1231,9 @@ class Friend {
 }
 ```
 
-#### Propiedades estáticas
+#### Miembros estáticas
 
-TypeScript admite [propiedades estáticas](http://www.typescriptlang.org/docs/handbook/classes.html#static-properties). Las propiedades estáticas pertenecen a la clase y no a una instancia de la clase. Eso significa que su valor existe solo una vez, sin importar cuántas instancias se creen de la clase.
+TypeScript admite tanto[propiedades como miembros estáticas](https://www.typescriptlang.org/docs/handbook/2/classes.html#static-members). Los miembros estáticos pertenecen a la clase y no a una instancia de la clase. Eso significa que su valor existe solo una vez, sin importar cuántas instancias se creen de la clase.
 
 ```typescript
 class Friend {
@@ -1228,11 +1241,15 @@ class Friend {
   constructor() {
     Friend.friendCounter++;
   }
+
+  static increment() {
+    Friend.friendCounter++;
+  }
 }
 
 new Friend();
 new Friend();
-new Friend();
+Friend.increment();
 console.log(Friend.friendCounter); // Logs 3
 ```
 
@@ -1804,7 +1821,7 @@ var boarder = new Friends.Skateboarder("Foo");
 
 Cuando se utiliza una biblioteca JavaScript existente, TypeScript no conoce los tipos ya que JavaScript no tiene tipos. Sin tipos, no se obtienen errores en tiempo de compilación ya que TypeScript no puede realizar comprobaciones de tipos.
 
-Es por eso que TypeScript admite [archivos de declaración](http://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) para bibliotecas JavaScript existentes. El archivo de declaración es un archivo TypeScript normal que por convención termina con `d.ts` y contiene las declaraciones de tipo para dicha biblioteca.
+Es por eso que TypeScript admite [archivos de declaración](http://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) para bibliotecas JavaScript existentes. El archivo de declaración es un archivo TypeScript normal que por convención termina con `.d.ts` y contiene las declaraciones de tipo para dicha biblioteca.
 
 Por ejemplo, pongamos que tenemos una pequeña biblioteca Javascript con una única función:
 
@@ -1885,7 +1902,7 @@ TypeScript no dispone de los tipos con lo cual TypeScript asume que `range(x: an
 
 Para ello podemos instalar la declaración de tipos de la biblioteca _'lodash'_ disponible en _NPM_. En _NPM_ están las declaraciones de tipos de la mayoría de bibliotecas de terceros. Se puede consultar el listado desde esta [página](http://microsoft.github.io/TypeSearch/) o buscar en el directorio de [NPM](https://www.npmjs.com/~types). Microsoft tiene un [repositorio](http://definitelytyped.org/) de definición de tipos.
 
-La declaración de tipos es un fichero que por convención es `d.ts`. Por ejemplo el fichero de _'lodash'_ una vez instalado se encuentra en `node_modules/@types/lodash/index.d.ts`. La declaración de tipos se instala vía _NPM_:
+La declaración de tipos es un fichero que por convención es `.d.ts`. Por ejemplo el fichero de _'lodash'_ una vez instalado se encuentra en `node_modules/@types/lodash/index.d.ts`. La declaración de tipos se instala vía _NPM_:
 
 ```terminal
 npm install @types/lodash --save-dev
@@ -1938,180 +1955,444 @@ declare function printFirstName(friend: Friend): void;
 ## Resumen
 
 ```typescript
-// Existen 3 tipos primitivos en TypeScript
-var isDone: boolean = false;
-var lines: number = 42; // números enteros y decimales
-var name: string = "Anders";
+// ------------
+// TIPOS PRIMITIVOS
+// ------------
+let age: number = 30; // números enteros y decimales
+let username: string = 'John';
+let isDone: boolean = false;
 
-// Cuando es imposible de saber, tenemos el tipo "Any"
-var notSure: any = 4;
-notSure = "maybe a string instead";
-notSure = false; // okey, definitivamente un boolean
+// El tipo 'any' puede contener valores de cualquier tipo y desactiva la verificación de tipos.
+let notSure: any = 4; // Evitar su uso en lo posible
+notSure = "maybe a string instead"; // ahora es un 'string'
+notSure = false; // ahora es un 'booleano
 
-// Para colecciones, hay matrices de tipos y matrices genéricas
-var list: number[] = [1, 2, 3];
-// Alternativamente, usando la matriz genérica
-var list: Array<number> = [1, 2, 3];
+// En TypeScript, 'null' y 'undefined' también son tipos válidos.
+let nullValue: null = null;
+let undefinedValue: undefined = undefined;
 
-// Para enumeradores:
+// TypeScript infiere automáticamente el tipo según el valor asignado a la variable
+let inferredString = 'Hello'; // Infiere el tipo 'string'
+let inferredNumber = 42;      // Infiere el tipo 'number'
+
+// El tipo 'void' se utiliza principalmente como tipo de retorno de una función
+// que no devuelve ningún valor
+function log(message: string): void {
+  console.log(message);
+}
+
+// El tipo 'never' representa el tipo de valores que nunca ocurren
+function fail(msg: string): never {
+  throw new Error(msg);
+}
+
+// ------------
+// ARRAYS 
+// ------------
+// Los arrays permiten almacenar múltiples valores del mismo tipo
+let numbers: number[] = [1, 2, 3];
+let names: string[] = ['Alice', 'Bob', 'Charlie'];
+
+// Acceder y modificar elementos de un array utilizando el índice
+let numbers: number[] = [1, 2, 3];
+console.log(numbers[0]); // 1
+numbers[1] = 5;
+console.log(numbers);    // [1, 5, 3]
+
+// Los arrays admiten operaciones como añadir, eliminar y modificar elementos
+let fruits: string[] = ['apple', 'banana', 'orange'];
+
+// Añadir elementos al final
+fruits.push('pear');
+console.log(fruits); // ['apple', 'banana', 'orange', 'pear']
+
+// Eliminar elementos del final
+fruits.pop();
+console.log(fruits); // ['apple', 'banana', 'orange']
+
+// Añadir elementos al principio
+fruits.unshift('grape');
+console.log(fruits); // ['grape', 'apple', 'banana', 'orange']
+
+// Eliminar elementos del principio
+fruits.shift();
+console.log(fruits); // ['apple', 'banana', 'orange']
+
+// Recorrer una array con un bucle 'for'
+let numbers: number[] = [1, 2, 3, 4, 5];
+
+for (let i = 0; i < numbers.length; i++) {
+    console.log(numbers[i]);
+}
+
+// Recorrer una array con un bucle 'for..of'
+let numbers: number[] = [1, 2, 3, 4, 5];
+
+for (let num of numbers) {
+    console.log(num);
+}
+
+// Recorrer una array con el método 'foreach'
+let numbers: number[] = [1, 2, 3, 4, 5];
+
+numbers.forEach(num => {
+    console.log(num);
+});
+
+// Recorrer las claves de un array con un bucle 'for..in'
+let numbers: number[] = [1, 2, 3, 4, 5];
+
+for (let index in numbers) {
+    console.log(index, numbers[index]);
+}
+
+// El método 'map' crea un NUEVO array con los resultados
+let numbers: number[] = [1, 2, 3, 4, 5];
+let doubled = numbers.map(num => num * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+
+// El método 'filter' crea un nuevo array con todos los elementos que pasen la prueba
+let numbers: number[] = [1, 2, 3, 4, 5];
+let evens = numbers.filter(num => num % 2 === 0);
+console.log(evens); // [2, 4]
+
+// ------------
+// TUPLAS
+// ------------
+// Las tuplas permiten expresar una matriz con un número fijo de elementos, 
+// con tipos conocidos y posiciones fijas.
+let employee: [string, number] = ['John', 30];
+
+// Se puede acceder a los elementos mediante su índice
+let name: string = employee[0]; // 'John'
+let age: number = employee[1];  // 30
+
+// Las tuplas pueden tener tipos diferentes para cada posición, incluso contener tuplas o arrays
+let data: [string, number, boolean] = ['Alice', 25, true];
+let userInfo: [string, [string, number]] = ['Alice', ['New York', 25]];
+
+// ------------
+// ENUMS
+// ------------
 enum Color {
-  Red,
-  Green,
-  Blue
+  Red,   // 0
+  Green, // 1
+  Blue,  // 2
+  Black = 5, // Se le asigna un valor
+  White  // Se asigna automáticamente el siguiente valor
 }
-var c: Color = Color.Green;
+// Uso del enum
+let c: Color = Color.Green;
+console.log(c); // 1
+console.log(Color.Black); // 5
+console.log(Color.White); // 6
 
-// Finalmente, "void" es usado para el caso especial de una función que no retorna nada
-function bigHorribleAlert(): void {
-  alert("I'm a little annoying box!");
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT"
 }
+// Uso del enum de cadenas
+let move: Direction = Direction.Left;
+console.log(move); // "LEFT"
 
-// Las funciones son ciudadanos de primera clase, soportan la sintáxis lambda "fat arrow" y
-// usan el tipo inferencia
+// ------------
+// TIPOS DE UNIÓN Y TIPOS DE INTERSECCIÓN
+// ------------
+// Los tipos de unión permiten que una variable tenga MÁS DE UN TIPO.
+let union: number | string;
+union = 10; // Correcto
+union = 'hello'; // Correcto
 
-// Lo siguiente es equivalante, la misma firma será inferida por el
-// compilador, y el mismo JavaScript será emitido
-var f1 = function(i: number): number {
-  return i * i;
-};
-// Retorna tipo inferido
-var f2 = function(i: number) {
-  return i * i;
-};
-var f3 = (i: number): number => {
-  return i * i;
-};
-// Retorna tipo inferido
-var f4 = (i: number) => {
-  return i * i;
-};
-// Retorna tipo inferido, one-liner significa que no es necesario que regresen palabras claves
-var f5 = (i: number) => i * i;
-
-// Las interfaces son estructurales, todo lo que tenga las propiedades cumple con la interfaz
-interface Person {
-  name: string;
-  // Propiedades opcionales, marcadas con un "?"
-  age?: number;
-  // Y por supuesto funciones
-  move(): void;
+// Función que acepta un parámetro de tipo unión
+function printId(id: number | string) {
+  console.log(`Your ID is: ${id}`);
 }
+printId(123);     // Your ID is: 123
+printId('ABC');   // Your ID is: ABC
 
-// Objeto que implementa la interfaz "Persona"
-// Puede ser tratada como Persona ya que posee las propiedades name y move
-var p: Persona = { name: "Bobby", move: () => {} };
-// Objetos que tienen propiedades opcionales:
-var validPersona: Persona = { name: "Bobby", age: 42, move: () => {} };
-// No es una persona porque su edad no es un número
-var invalidPersona: Persona = { name: "Bobby", age: true };
-
-// Las interfaces también pueden describir un tipo de función
-interface SearchFunc {
-  (source: string, subString: string): boolean;
-}
-// Solo los tipos de parámetros son importantes, los nombres no son importantes.
-var mySearch: SearchFunc;
-mySearch = function(src: string, sub: string) {
-  return src.search(sub) != -1;
-};
-
-// Clases - los miembros son públicos por defecto
-class Point {
-  // Properties
-  x: number;
-
-  // Constructor - las palabras clave public/private en este contexto generarán
-  // un código boiler plate para la propiedad y la inicialización en el constructor.
-  // En este ejemplo, "y" debe ser definida al igual que "x" lo es, pero con menos código
-  // También son soportados valores por defecto
-
-  constructor(x: number, public y: number = 0) {
-    this.x = x;
-  }
-
-  // Funciones
-  dist() {
-    return Math.sqrt(this.x * this.x + this.y * this.y);
-  }
-
-  // Miembros estáticos
-  static origin = new Point(0, 0);
-}
-
-var p1 = new Point(10, 20);
-var p2 = new Point(25); //y será 0
-
-// Herencia
-class Point3D extends Point {
-  constructor(x: number, y: number, public z: number = 0) {
-    super(x, y); // Un llamado explícito al constructor de la super clase es indispensable
-  }
-
-  // Sobrescribir
-  dist() {
-    var d = super.dist();
-    return Math.sqrt(d * d + this.z * this.z);
+// Sólo se pueden acceder a PROPIEDADES Y MÉTODOS COMUNES
+// a todos los tipos de la unión
+function printId(id: number | string) {
+  // console.log(id.toUpperCase()); // Error: 'toUpperCase' no existe en 'number'
+  
+  if (typeof id === 'string') {
+      // Aquí TypeScript sabe que 'id' es 'string'
+      console.log(id.toUpperCase());
+  } else {
+      // Aquí TypeScript sabe que 'id' es 'number'
+      console.log(id.toFixed(2));
   }
 }
 
-// Módulos, los "." pueden ser usados como separadores para los submódulos
-module Geometry {
-  export class Square {
-    constructor(public sideLength: number = 0) {}
-    area() {
-      return Math.pow(this.sideLength, 2);
+// Los tipos de intersección COMBINAN MÚLTIPLES tipos en uno solo
+// Puede ser más útil a la hora de combinar distintas interfaces
+type Person = { name: string };
+type Employee = { employeeId: Date };
+
+type EmployeePerson = Person & Employee;
+
+let john: EmployeePerson = {
+    name: 'John',
+    employeeId: 1234
+};
+
+console.log(`Nombre: ${john.name} - ID: ${john.employeeId}`); // "Nombre: John - ID: 1234"
+
+// Es importante asegurarse que todas propiedades y métodos están presentes
+let doe: EmployeePerson = {
+    name: 'John'
+};
+// ERROR : Property 'employeeId' is missing in type '{ name: string; }' but required in type 'Employee'
+
+// ------------
+// FUNCIONES
+// ------------
+function add(x: number, y: number): number {
+  return x + y;
+}
+let result = add(2, 3); // 5
+
+// Una función sin 'return' retorna el tipo 'void', que puede omitirse
+function log(message: string): void {
+  console.log(message);
+}
+
+// Los parámetros son OPCIONALES cuando se indica mediante '?'
+function buildName(firstName: string, lastName?: string): string {
+  return lastName ? `${firstName} ${lastName}` : firstName;
+}
+let fullName1 = buildName('John'); // 'John'
+let fullName2 = buildName('John', 'Doe'); // 'John Doe'
+
+
+// Se puede asignar valores por DEFECTO a los parámetros de una función
+function greet(name: string = 'World'): void {
+  console.log(`Hello, ${name}!`);
+}
+greet();         // Hello, World!
+greet('Alice');  // Hello, Alice!
+
+// Una función puede aceptar un número VARIABLE de argumentos usando 'rest parameters'
+function sum(...numbers: number[]): number {
+  return numbers.reduce((acc, val) => acc + val, 0);
+}
+let total = sum(1, 2, 3, 4, 5); // 15
+
+// TypeScript puede INFERIR AUTOMÁTICAMENTE el tipo de retorno
+function getMessage() {
+    return 'Hello, World!';
+}
+let message: string = getMessage(); // Infiere el tipo 'string'
+console.log(typeof message); // imprime "string"
+
+// Las funciones pueden actuar como TIPOS
+type MathFunction = (x: number, y: number) => number;
+
+let add: MathFunction = (x, y) => x + y;
+let subtract: MathFunction = (x, y) => x - y;
+
+console.log(add(3, 4));      // 7
+console.log(subtract(8, 3)); // 5
+
+// Se pueden definir funciones sin nombres, conocidas por funciones ANÓNIMAS
+let multiply = function(x: number, y: number): number {
+  return x * y;
+};
+let result = multiply(2, 3); // 6
+
+// Las funciones FLECHA son una forma más concisa de definir funciones anónimas
+let double = (x: number): number => x * 2;
+let result = double(3); // 6
+
+// ------------
+// CLASES
+// ------------
+// DECLARACIÓN de clases con la palabra clave 'class'
+class Person {
+  // Propiedades de clase
+  firstname: string; // por defecto es 'public'
+  public lastname: string;
+  private age: number;
+  protected nationality: string;
+
+  constructor(firstname: string, lastname: string, age: number, nationality: string) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.age = age;
+    this.nationality = nationality;
+  }
+
+  // Métodos de clase
+  greet() {
+      console.log(`Hello, my name is ${this.firstname} and I am ${this.age} years old`);
+  }
+
+  getAge() {
+    return this.age; // Se puede acceder a 'age' dentro de la clase
+  }
+}
+
+let jane = new Person('Jane', 25, 'American');
+console.log(jane.name); // Jane, porque `name` es público por defecto
+console.log(jane.getAge()); // 25
+// console.log(jane.age); // Error: Property 'age' is private
+
+// HERENCIA de clases con la palabra clave 'extends'
+class Employee extends Person {
+  employeeId: number;
+
+  constructor(firstname: string, lastname: string, age: number, nationality: string, employeeId: number) {
+    super(firstname, lastname, age, nationality); // Llama al constructor de la clase base
+    this.employeeId = employeeId;
+  }
+
+  displayEmployeeInfo() {
+    console.log(`Employee ID: ${this.employeeId}`);
+  }
+}
+
+let mike = new Employee('Mike', 'Doe', 35, 'Canadian', 12345);
+mike.greet(); // Hello, my name is Mike and I am 35 years old.
+mike.displayEmployeeInfo(); // Employee ID: 12345
+
+// ------------
+// INTERFACES
+// ------------
+// Declaración de interfaz
+interface LabelledValue {
+    label: string;
+}
+
+function printLabel(labelledObj: LabelledValue) {
+    console.log(labelledObj.label);
+}
+
+let myObj = { size: 10, label: 'Size 10 Object' };
+printLabel(myObj);
+
+// Propiedades opcionales
+interface SquareConfig {
+    color?: string;
+    width?: number;
+}
+
+function createSquare(config: SquareConfig): { color: string; area: number } {
+    let newSquare = { color: 'white', area: 100 };
+    if (config.color) {
+        newSquare.color = config.color;
     }
-  }
+    if (config.width) {
+        newSquare.area = config.width * config.width;
+    }
+    return newSquare;
 }
 
-var s1 = new Geometry.Square(5);
+// ------------
+// TIPOS AVANZADOS
+// ------------
+// Type Assertion
+let someValue: any = 'this is a string';
+let strLength: number = (someValue as string).length;
 
-// Un alias local para referirse a un módulo
-import G = Geometry;
-
-var s2 = new G.Square(10);
-
-// Genéricos
-// Clases
-class Tuple<T1, T2> {
-  constructor(public item1: T1, public item2: T2) {}
+// Type Guards
+function isString(x: any): x is string {
+    return typeof x === 'string';
 }
 
-// Interfaces
-interface Pair<T> {
-  item1: T;
-  item2: T;
+function example(x: string | number) {
+    if (isString(x)) {
+        console.log(x.toUpperCase());
+    } else {
+        console.log(x.toFixed(2));
+    }
 }
 
-// Y funciones
-var pairToTuple = function<T>(p: Pair<T>) {
-  return new Tuple(p.item1, p.item2);
+// ------------
+// TIPOS GENÉRICOS
+// ------------
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let output = identity<string>('myString'); // 'myString'
+let output2 = identity<number>(42); // 42
+
+// ------------
+// MÓDULOS
+// ------------
+// math.ts
+export function add(x: number, y: number): number {
+    return x + y;
+}
+
+// app.ts
+import { add } from './math';
+console.log(add(2, 3)); // 5
+
+// ------------
+// ESPACIO DE NOMBRES
+// ------------
+namespace Validation {
+    export interface StringValidator {
+        isAcceptable(s: string): boolean;
+    }
+
+    export const numberRegexp = /^[0-9]+$/;
+
+    export class ZipCodeValidator implements StringValidator {
+        isAcceptable(s: string) {
+            return s.length === 5 && numberRegexp.test(s);
+        }
+    }
+}
+
+let validator = new Validation.ZipCodeValidator();
+console.log(validator.isAcceptable('12345')); // true
+
+// ------------
+// MANEJO DEL DOM
+// ------------
+// Acceso y 'Type Casting'
+let myInput = document.getElementById('myInput') as HTMLInputElement;
+myInput.value = 'Hello, World!';
+
+// Validación de existencia
+let myButton = document.getElementById('myButton');
+if (myButton) {
+    myButton.addEventListener('click', () => {
+        console.log('Button clicked!');
+    });
+}
+
+// ------------
+// TIPOS UTILITARIOS
+// ------------
+// Partial, Readonly, Pick y Omit
+interface Todo {
+    title: string;
+    description: string;
+}
+
+let todo: Partial<Todo> = {};
+todo.title = 'Learn TypeScript';
+
+const readOnlyTodo: Readonly<Todo> = {
+    title: 'Learn TypeScript',
+    description: 'Understand the basics',
 };
 
-var tuple = pairToTuple({ item1: "hello", item2: "world" });
-
-// Incluyendo referencias a un archivo de definición:
-/// <reference path="jquery.d.ts" />
+type TodoPreview = Pick<Todo, 'title'>;
+type TodoWithoutDescription = Omit<Todo, 'description'>;
 ```
 
 ---
 
 ## Enlaces de interés
 
-- <https://www.typescriptlang.org/>
+- 🔸 <https://www.typescriptlang.org/>
 - <https://www.typescriptlang.org/docs/>
-- <https://roadmap.sh/typescript>
-- <https://learnxinyminutes.com/docs/es-es/typescript-es/>
-- <https://goalkicker.com/TypeScriptBook2/>
-- <https://github.com/dzharii/awesome-typescript>
-- <https://github.com/semlinker/awesome-typescript>
-- <https://github.com/type-challenges/type-challenges>
-- <https://the-algorithms.com/language/typescript>
-- <https://www.tutorialsteacher.com/typescript>
-- <https://learntypescript.dev/>
-- <https://www.typescripttutorial.net/>
-- <https://www.w3schools.com/typescript/index.php>
-- <https://basarat.gitbook.io/typescript/>
 
 ## Licencia
 
