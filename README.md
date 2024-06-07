@@ -2252,21 +2252,54 @@ class Employee extends Person {
     console.log(`Employee ID: ${this.employeeId}`);
   }
 }
-
 let mike = new Employee('Mike', 'Doe', 35, 'Canadian', 12345);
 mike.greet(); // Hello, my name is Mike and I am 35 years old.
 mike.displayEmployeeInfo(); // Employee ID: 12345
+
+// Las clases ABSTRACTAS no pueden ser instanciadas directamente.
+// Se utilizan como base para otras clases
+abstract class Person {
+  name: string;
+  age: number;
+
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+
+  abstract describe(): void;
+
+  greet() {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+
+class Student extends Person {
+  studentId: number;
+
+  constructor(name: string, age: number, studentId: number) {
+    super(name, age);
+    this.studentId = studentId;
+  }
+
+  describe() {
+    console.log(`Student ID: ${this.studentId}`);
+  }
+}
+let anna = new Student('Anna', 22, 67890);
+anna.greet(); // Hello, my name is Anna and I am 22 years old.
+anna.describe(); // Student ID: 67890
 
 // ------------
 // INTERFACES
 // ------------
 // Declaración de interfaz
 interface LabelledValue {
-    label: string;
+  label: string;
 }
 
 function printLabel(labelledObj: LabelledValue) {
-    console.log(labelledObj.label);
+  console.log(labelledObj.label);
 }
 
 let myObj = { size: 10, label: 'Size 10 Object' };
@@ -2274,19 +2307,19 @@ printLabel(myObj);
 
 // Propiedades opcionales
 interface SquareConfig {
-    color?: string;
-    width?: number;
+  color?: string;
+  width?: number;
 }
 
 function createSquare(config: SquareConfig): { color: string; area: number } {
-    let newSquare = { color: 'white', area: 100 };
-    if (config.color) {
-        newSquare.color = config.color;
-    }
-    if (config.width) {
-        newSquare.area = config.width * config.width;
-    }
-    return newSquare;
+  let newSquare = { color: 'white', area: 100 };
+  if (config.color) {
+    newSquare.color = config.color;
+  }
+  if (config.width) {
+    newSquare.area = config.width * config.width;
+  }
+  return newSquare;
 }
 
 // ------------
@@ -2298,24 +2331,23 @@ let strLength: number = (someValue as string).length;
 
 // Type Guards
 function isString(x: any): x is string {
-    return typeof x === 'string';
+  return typeof x === 'string';
 }
 
 function example(x: string | number) {
-    if (isString(x)) {
-        console.log(x.toUpperCase());
-    } else {
-        console.log(x.toFixed(2));
-    }
+  if (isString(x)) {
+    console.log(x.toUpperCase());
+  } else {
+    console.log(x.toFixed(2));
+  }
 }
 
 // ------------
 // TIPOS GENÉRICOS
 // ------------
 function identity<T>(arg: T): T {
-    return arg;
+  return arg;
 }
-
 let output = identity<string>('myString'); // 'myString'
 let output2 = identity<number>(42); // 42
 
@@ -2324,7 +2356,7 @@ let output2 = identity<number>(42); // 42
 // ------------
 // math.ts
 export function add(x: number, y: number): number {
-    return x + y;
+  return x + y;
 }
 
 // app.ts
@@ -2335,19 +2367,18 @@ console.log(add(2, 3)); // 5
 // ESPACIO DE NOMBRES
 // ------------
 namespace Validation {
-    export interface StringValidator {
-        isAcceptable(s: string): boolean;
-    }
+  export interface StringValidator {
+    isAcceptable(s: string): boolean;
+  }
 
-    export const numberRegexp = /^[0-9]+$/;
+  export const numberRegexp = /^[0-9]+$/;
 
-    export class ZipCodeValidator implements StringValidator {
-        isAcceptable(s: string) {
-            return s.length === 5 && numberRegexp.test(s);
-        }
+  export class ZipCodeValidator implements StringValidator {
+    isAcceptable(s: string) {
+      return s.length === 5 && numberRegexp.test(s);
     }
+  }
 }
-
 let validator = new Validation.ZipCodeValidator();
 console.log(validator.isAcceptable('12345')); // true
 
@@ -2361,9 +2392,9 @@ myInput.value = 'Hello, World!';
 // Validación de existencia
 let myButton = document.getElementById('myButton');
 if (myButton) {
-    myButton.addEventListener('click', () => {
-        console.log('Button clicked!');
-    });
+  myButton.addEventListener('click', () => {
+    console.log('Button clicked!');
+  });
 }
 
 // ------------
@@ -2371,16 +2402,16 @@ if (myButton) {
 // ------------
 // Partial, Readonly, Pick y Omit
 interface Todo {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 }
 
 let todo: Partial<Todo> = {};
 todo.title = 'Learn TypeScript';
 
 const readOnlyTodo: Readonly<Todo> = {
-    title: 'Learn TypeScript',
-    description: 'Understand the basics',
+  title: 'Learn TypeScript',
+  description: 'Understand the basics',
 };
 
 type TodoPreview = Pick<Todo, 'title'>;
