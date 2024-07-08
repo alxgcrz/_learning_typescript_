@@ -2,7 +2,6 @@
 *.yaml
 *.html
 .npmrc
-practice/
 ## --------------------
 
 # Created by https://www.gitignore.io/api/java,gradle,windows,intellij+all,visualstudiocode
