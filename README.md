@@ -2420,7 +2420,7 @@ type TodoWithoutDescription = Omit<Todo, 'description'>;
 
 ---
 
-## Enlaces de interés
+## Referencias
 
 - 🔸 <https://www.typescriptlang.org/>
 - <https://www.typescriptlang.org/docs/>
