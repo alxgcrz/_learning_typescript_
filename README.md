@@ -66,7 +66,7 @@ Para no tener que compilar un fichero TypeScript cada vez que se realicen cambio
 tsc main.ts -w
 ```
 
-[Más información](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 
 Para **inicializar** un proyecto TypeScript, escribimos por terminal dentro de la carpeta del proyecto:
 
@@ -106,7 +106,7 @@ Algunas opciones son:
 
 - **`sourceMap`**: genera ficheros `*.map` en la compilación de ficheros
 
-[Más información sobre este fichero 'tsconfig.json'](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
 Cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, **no es necesario** indicar el nombre del fichero o ficheros con el código Typescript, ya que se compilarán todos los ficheros `.ts` del proyecto. Si se indica el nombre del fichero `.ts`, se ignora el fichero `tsconfig.json` y su contenido.
 
@@ -124,7 +124,7 @@ Para depurar el código TypeScript en el navegador, debemos utilizar un fichero 
 
 Disponemos de varios editores online o _playground_ para escribir y probar código escrito en TypeScript como puede ser el [editor oficial](https://www.typescriptlang.org/play).
 
-**Visual Studio Code** es un editor que incluye soporte para TypeScript aunque no incluye el compilador `tsc`. [Más información sobre VSCode y TypeScript](https://code.visualstudio.com/docs/typescript/typescript-tutorial).
+**Visual Studio Code** es un editor que incluye [soporte para TypeScript](https://code.visualstudio.com/docs/typescript/typescript-tutorial) aunque no incluye el compilador `tsc`.
 
 ## Tipos básicos
 
@@ -290,7 +290,7 @@ Otra forma más compacta es utilizar el método `.forEach()` y las funciones fle
 firstnames.forEach(firstname => console.log(firstname));
 ```
 
-[Más información](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)
 
 ### Tupla
 
@@ -325,7 +325,7 @@ console.log(x[5].toString()); // Error, Property '5' does not exist on type '[st
 
 Las tuplas son como arrays, por lo que se pueden utilizar los métodos disponibles en los arrays como `pop()`, `concat()`, etcétera...
 
-[Más información](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types)
 
 ### Enum
 
@@ -383,7 +383,7 @@ enum BooleanLikeHeterogeneousEnum {
 }
 ```
 
-[Más información](https://www.typescriptlang.org/docs/handbook/enums.html)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/enums.html)
 
 ### any
 
@@ -435,7 +435,7 @@ list[1] = 100;
 
 Para los casos en los que se tiene la información en tiempo de compilación, siempre es recomendable indicar el tipo de forma explícita en vez de emplear el tipo `any`, ya sea de forma explícita o implícita, ya que esto permitirá al compilador de TypeScript realizar la verificación de tipos y el soporte de herramientas como la finalización de declaraciones.
 
-[Más información](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any)
 
 ### unknown
 
@@ -511,7 +511,7 @@ function infiniteLoop(): never {
 }
 ```
 
-[Más información](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type)
 
 ### object
 
@@ -541,7 +541,7 @@ console.log(myObject.value);
 console.dir(myObject)
 ```
 
-[Más información](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#object-types)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#object-types)
 
 ### symbol
 
@@ -571,7 +571,7 @@ const obj = {
 console.log(obj[miSimbolo]); // 'Valor asociado al símbolo'
 ```
 
-[Más información](https://www.typescriptlang.org/docs/handbook/symbols.html)
+- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/symbols.html)
 
 ### Union Type
 
