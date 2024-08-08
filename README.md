@@ -66,7 +66,7 @@ Para no tener que compilar un fichero TypeScript cada vez que se realicen cambio
 tsc main.ts -w
 ```
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+El compilador [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html) dispone de más opciones que pueden consultarse en la documentación oficial.
 
 Para **inicializar** un proyecto TypeScript, escribimos por terminal dentro de la carpeta del proyecto:
 
@@ -74,7 +74,7 @@ Para **inicializar** un proyecto TypeScript, escribimos por terminal dentro de l
 tsc --init
 ```
 
-Esto crea un fichero `tsconfig.json` con las opciones por defecto. La presencia de este archivo significa que este directorio es la raíz del proyecto. Un ejemplo de este fichero sería:
+Esto crea un fichero [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) con las opciones por defecto. La presencia de este archivo significa que este directorio es la raíz del proyecto. Un ejemplo de este fichero sería:
 
 ```json
 {
@@ -106,8 +106,6 @@ Algunas opciones son:
 
 - **`sourceMap`**: genera ficheros `*.map` en la compilación de ficheros
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-
 Cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, **no es necesario** indicar el nombre del fichero o ficheros con el código Typescript, ya que se compilarán todos los ficheros `.ts` del proyecto. Si se indica el nombre del fichero `.ts`, se ignora el fichero `tsconfig.json` y su contenido.
 
 Por tanto, una vez inicializado el proyecto, podemos arrancar el compilador TypeScript en modo _"observable"_ sin necesidad de indicar un fichero **.ts** ya que realizará la compilación de todos los ficheros de la carpeta `rootDir`:
@@ -128,7 +126,7 @@ Disponemos de varios editores online o _playground_ para escribir y probar códi
 
 ## Tipos básicos
 
-Para que los programas sean útiles, debemos poder trabajar con algunas de las unidades de datos más simples: números, cadenas, estructuras, valores booleanos y similares. En [TypeScript](http://www.typescriptlang.org/docs/handbook/basic-types.html), se admite la mayoría de los tipos que se esperaría en JavaScript.
+Para que los programas sean útiles, debemos poder trabajar con algunas de las unidades de datos más simples: números, cadenas, estructuras, valores booleanos y similares. En [TypeScript](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), se admite la mayoría de los tipos que se esperaría en JavaScript.
 
 El tipo de la variable se indica después del nombre. Se separa el nombre de la variable y el tipo mediante dos puntos ':', como por ejemplo:
 
@@ -220,7 +218,7 @@ Cuando se compila con `"target": "es5"` o posterior el fichero `tsconfig.json`, 
 
 ### Array
 
-TypeScript, como JavaScript, permite trabajar con arrays de valores. Los arrays pueden contener cualquier tipo de dato.
+TypeScript, como JavaScript, permite trabajar con arrays de valores. Los [**arrays**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays) pueden contener cualquier tipo de dato.
 
 Los arrays se pueden escribir de dos maneras. Una forma es indicar el tipo de los elementos seguidos de `[]` para indicar que es un array de elementos de ese tipo:
 
@@ -290,11 +288,11 @@ Otra forma más compacta es utilizar el método `.forEach()` y las funciones fle
 firstnames.forEach(firstname => console.log(firstname));
 ```
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)
-
 ### Tupla
 
-Las tuplas permiten expresar un array con un número fijo de elementos cuyos tipos son conocidos, aunque no necesariamente iguales. Por ejemplo, podemos usar una tupla para representar un valor que se compone de un `string` y un `number`, de forma que el `string` está en el índice 0 y el `number` está en el índice 1. El compilador conoce esto y puede realizar las comprobaciones al asignar nuevos valores:
+Las [**tuplas**](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types) permiten expresar un array con un número fijo de elementos cuyos tipos son conocidos, aunque no necesariamente iguales.
+
+Por ejemplo, podemos usar una tupla para representar un valor que se compone de un `string` y un `number`, de forma que el `string` está en el índice 0 y el `number` está en el índice 1. El compilador conoce esto y puede realizar las comprobaciones al asignar nuevos valores:
 
 ```typescript
 // Declarar una tupla
@@ -325,11 +323,9 @@ console.log(x[5].toString()); // Error, Property '5' does not exist on type '[st
 
 Las tuplas son como arrays, por lo que se pueden utilizar los métodos disponibles en los arrays como `pop()`, `concat()`, etcétera...
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types)
-
 ### Enum
 
-Un añadido útil al conjunto estándar de tipos de datos de JavaScript es la **enumeración**. Al igual que en lenguajes como C# o Java, una enumeración es una forma de dar nombres más amigables a conjuntos de valores numéricos.
+Un añadido útil al conjunto estándar de tipos de datos de JavaScript es la [**enumeración**](https://www.typescriptlang.org/docs/handbook/enums.html). Al igual que en lenguajes como C# o Java, una enumeración es una forma de dar nombres más amigables a conjuntos de valores numéricos.
 
 Para acceder al valor de la enumeración, usamos su nombre seguido de un punto y el nombre de la variable miembro como por ejemplo `Color.Green` o `Color.Blue`:
 
@@ -383,13 +379,11 @@ enum BooleanLikeHeterogeneousEnum {
 }
 ```
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/enums.html)
-
 ### any
 
 En determinados escenarios es posible que tengamos que describir una variable con un tipo que es **desconocido** dado que su valor puede provenir de contenido dinámico, como por ejemplo, del usuario o de una biblioteca de terceros.
 
-En estos casos, podemos optar por indicar al compilador de TypeScript que no realice la verificación de tipos ni la existencia de sus miembros o métodos. Para ello, usamos el tipo `any`:
+En estos casos, podemos optar por indicar al compilador de TypeScript que no realice la verificación de tipos ni la existencia de sus miembros o métodos. Para ello, usamos el tipo [`any`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any):
 
 ```typescript
 let notSure: any = 4;
@@ -434,8 +428,6 @@ list[1] = 100;
 ```
 
 Para los casos en los que se tiene la información en tiempo de compilación, siempre es recomendable indicar el tipo de forma explícita en vez de emplear el tipo `any`, ya sea de forma explícita o implícita, ya que esto permitirá al compilador de TypeScript realizar la verificación de tipos y el soporte de herramientas como la finalización de declaraciones.
-
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any)
 
 ### unknown
 
@@ -490,7 +482,7 @@ Por contra, en JavaScript, cuando una función no retorna ningún valor, implíc
 
 ### never
 
-El tipo `never` representa el tipo de valores que nunca ocurren. Por ejemplo, `never` es el tipo de retorno para una expresión de función o una expresión de función de flecha que siempre arroja una excepción o una que nunca devuelve un valor.
+El tipo [`never`](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type) representa el tipo de valores que nunca ocurren. Por ejemplo, `never` es el tipo de retorno para una expresión de función o una expresión de función de flecha que siempre arroja una excepción o una que nunca devuelve un valor.
 
 El tipo `never` es un subtipo de cada tipo y por tanto es asignable a todos los demás tipos. Sin embargo, ningún tipo es un subtipo de `never` ni asignable a `never` excepto sí mismo. Incluso `any` no es asignable a `never`.
 
@@ -511,11 +503,9 @@ function infiniteLoop(): never {
 }
 ```
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type)
-
 ### object
 
-El tipo `object` es un tipo que representa el tipo no primitivo, es decir, cualquier cosa que no sea `number`, `string`, `boolean`, `symbol`, `null`, o `undefined`.
+El tipo [`object`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#object-types) es un tipo que representa el tipo no primitivo, es decir, cualquier cosa que no sea `number`, `string`, `boolean`, `symbol`, `null`, o `undefined`.
 
 ```typescript
 declare function create(o: object | null): void;
@@ -541,11 +531,9 @@ console.log(myObject.value);
 console.dir(myObject)
 ```
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#object-types)
-
 ### symbol
 
-En TypeScript, el tipo `Symbol`, introducido en ECMAScript 2015, representa un tipo primitivo que es utilizado para crear identificadores únicos e inmutables. Cada valor de tipo `Symbol` es único, lo que significa que no hay dos símbolos que sean iguales lo que mejora la seguridad y evita colisiones de nombres.
+En TypeScript, el tipo [`Symbol`](https://www.typescriptlang.org/docs/handbook/symbols.html), introducido en ECMAScript 2015, representa un tipo primitivo que es utilizado para crear identificadores únicos e inmutables. Cada valor de tipo `Symbol` es único, lo que significa que no hay dos símbolos que sean iguales lo que mejora la seguridad y evita colisiones de nombres.
 
 ```typescript
 const simbolo1 = Symbol();
@@ -571,11 +559,9 @@ const obj = {
 console.log(obj[miSimbolo]); // 'Valor asociado al símbolo'
 ```
 
-- [:link: Más información en la doc oficial](https://www.typescriptlang.org/docs/handbook/symbols.html)
-
 ### Union Type
 
-En determinados escenarios podemos necesitar almacenar **diferentes tipos en una misma variable** pero queremos mantener acotado los tipos posibles. En vez de usar el tipo `any` que permitiría cualquier tipo podemos usar el **_'union type'_**. Este tipo es una combinación de los tipos posibles que admitirá la variable.
+En determinados escenarios podemos necesitar almacenar **diferentes tipos en una misma variable** pero queremos mantener acotado los tipos posibles. En vez de usar el tipo `any` que permitiría cualquier tipo podemos usar el [**_'union type'_**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types). Este tipo es una combinación de los tipos posibles que admitirá la variable.
 
 Por ejemplo, definimos una variable usando el _'union type'_ `boolean|number` de forma que la variable sólo acepta valores de tipo `boolean` o `number`. Cualquier intento de asignar valores de otro tipo lanza un error:
 
@@ -948,7 +934,7 @@ En TypeScript se pueden emplear construccciones orientadas a objetos como interf
 
 ### Interfaces
 
-Una [interfaz](http://www.typescriptlang.org/docs/handbook/interfaces.html) es una construcción TypeScript. No hay salida compilada en JavaScript. Esto se debe a que una interfaz es solo un tipo sin implementación. Como JavaScript no tiene tipos y no hay implementación para una interfaz, no hay nada que generar en JavaScript.
+Una [interfaz](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) es una construcción TypeScript. No hay salida compilada en JavaScript. Esto se debe a que una interfaz es solo un tipo sin implementación. Como JavaScript no tiene tipos y no hay implementación para una interfaz, no hay nada que generar en JavaScript.
 
 Uno de los principios básicos de TypeScript es la verificación de tipos. Dado que una interfaz es solo un tipo sin implementación, es una forma poderosa de crear contratos de forma que si no se satisface la interfaz, TypeScript mostrará un error en tiempo de compilación.
 
@@ -1060,7 +1046,7 @@ let dev: Developer = new Friend(); // OK, because property exists
 
 La especificación de Javascript ES2015 tiene soporte para las clases. Gracias a TypeScript, podemos usar clases y compilar el código a 'ES5' o incluso a 'ES3'.
 
-Una [clase](http://www.typescriptlang.org/docs/handbook/classes.html) tiene propiedades, métodos y un constructor usado para instanciar la clase:
+Una [clase](https://www.typescriptlang.org/docs/handbook/2/classes.html) tiene propiedades, métodos y un constructor usado para instanciar la clase:
 
 ```typescript
 class Friend {
@@ -1148,7 +1134,7 @@ console.log(friend.knowsTypeScript); // Prints 'true' que es el valor por defect
 
 #### Propiedades en los parámetros del constructor
 
-[_'Parameter properties'_](http://www.typescriptlang.org/docs/handbook/classes.html#parameter-properties) es una forma directa en TypeScript de definir propiedades de forma implícita que serán definidas e inicializadas por el compilador a partir de los parámetros del constructor.
+[_'Parameter properties'_](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) es una forma directa en TypeScript de definir propiedades de forma implícita que serán definidas e inicializadas por el compilador a partir de los parámetros del constructor.
 
 Para indicar al compilador que es un _'parameter property'_ se añade el modificador de visibilidad al parámetro en el constructor. El compilador definirá e inicializará una propiedad con el mismo nombre que el parámetro de forma automática:
 
@@ -1173,7 +1159,7 @@ class Friend {
 
 #### 'Getters/Setters'
 
-TypeScript admite [_'getters/setters'_](http://www.typescriptlang.org/docs/handbook/classes.html#accessors) como una forma de interceptar accesos a un miembro de un objeto como ocurre en C#. La única limitación es que tenemos que indicar un _target 'ES5'_ o superior. En la especificación _'ES3'_ o inferior no está soportado.
+TypeScript admite _'getters/setters'_ como una forma de interceptar accesos a un miembro de un objeto como ocurre en C#. La única limitación es que tenemos que indicar un _target 'ES5'_ o superior. En la especificación _'ES3'_ o inferior no está soportado.
 
 ```typescript
 class Friend {
@@ -1255,7 +1241,7 @@ console.log(Friend.friendCounter); // Logs 3
 
 ### Modificadores de acceso
 
-Por defecto, todos los miembros de una clase como propiedades, métodos y el constructor son **públicos** en [TypeScript](http://www.typescriptlang.org/docs/handbook/classes.html#public-private-and-protected-modifiers). El modificador `public` significa que se puede acceder a cualquier miembro de una clase que sea público desde fuera de esa clase. Se puede marcar como `public` de forma explícita, pero no es necesario salvo por legibilidad.
+Por defecto, todos los miembros de una clase como propiedades, métodos y el constructor son **públicos** en [TypeScript](https://www.typescriptlang.org/docs/handbook/2/classes.html#member-visibility). El modificador `public` significa que se puede acceder a cualquier miembro de una clase que sea público desde fuera de esa clase. Se puede marcar como `public` de forma explícita, pero no es necesario salvo por legibilidad.
 
 Los modificadores de acceso son muy parecidos a Java:
 
@@ -1265,7 +1251,7 @@ Los modificadores de acceso son muy parecidos a Java:
 
 ### Herencia
 
-TypeScript tiene soporte para la [herencia](http://www.typescriptlang.org/docs/handbook/classes.html#inheritance), uno de los pilares de la **"Programación Orientada a Objetos"**. Al igual que Java se usa la palabra reservada `extends` para heredar de una clase existente:
+TypeScript tiene soporte para la [**herencia**](https://www.typescriptlang.org/docs/handbook/2/classes.html#class-heritage), uno de los pilares de la **"Programación Orientada a Objetos"**. Al igual que Java se usa la palabra reservada `extends` para heredar de una clase existente:
 
 ```typescript
 class Friend {
@@ -1297,7 +1283,7 @@ class Developer extends Friend {
 
 ### Clases abstractas
 
-TypeScript tiene soporte para el concepto de [clases abstractas](http://www.typescriptlang.org/docs/handbook/classes.html#abstract-classes). Con una clase abstracta se fuerza a la subclase a que implemente los métodos abstractos.
+TypeScript tiene soporte para el concepto de [**clases abstractas**](https://www.typescriptlang.org/docs/handbook/2/classes.html#abstract-classes-and-members). Con una clase abstracta se fuerza a la subclase a que implemente los métodos abstractos.
 
 Para crear una clase abstracta se utiliza la palabra reservada `abstract`. Los métodos abstractos que tienen que ser implementados también se marcan con la palabra `abstract`.
 
@@ -1347,7 +1333,7 @@ if(friend instanceof Developer) {
 
 ### Desestructurando objetos
 
-Al igual que Kotlin, TypeScript permite desestructurar objetos, lo que significa que podemos extraer una o más propiedades de un objeto con una notación más compacta. Podemos asignar los valores de las propiedades a variables nuevas o utilizar los mismos nombres de las propiedades como nombres de variable:
+Al igual que Kotlin, TypeScript permite **desestructurar objetos**, lo que significa que podemos extraer una o más propiedades de un objeto con una notación más compacta. Podemos asignar los valores de las propiedades a variables nuevas o utilizar los mismos nombres de las propiedades como nombres de variable:
 
 ```typescript
 class Friend {
@@ -1396,7 +1382,7 @@ console.log(second); // Prints '2'
 
 Las funciones son la base fundamental de cualquier aplicación en JavaScript dado que JavaScript es un lenguaje de programación funcional.
 
-En TypeScript, aunque hay clases, espacios de nombres y módulos, las [funciones](http://www.typescriptlang.org/docs/handbook/functions.html) siguen desempeñando un papel clave en la descripción de cómo hacer las cosas. TypeScript también agrega algunas capacidades nuevas a las funciones estándar de JavaScript para que sea más fácil trabajar con ellas.
+En TypeScript, aunque hay clases, espacios de nombres y módulos, las [**funciones**](https://www.typescriptlang.org/docs/handbook/2/functions.html) siguen desempeñando un papel clave en la descripción de cómo hacer las cosas. TypeScript también agrega algunas capacidades nuevas a las funciones estándar de JavaScript para que sea más fácil trabajar con ellas.
 
 ### Tipos de funciones
 
@@ -1440,7 +1426,7 @@ function multiply(x: number, y: number): number {
 
 En Javascript se pueden omitir parámetros en la llamada de la función mientras que en TypeScript no se puede.
 
-Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
+Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](https://www.typescriptlang.org/docs/handbook/2/functions.html#optional-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, lastName?: string) {
@@ -1479,7 +1465,7 @@ console.log(getFullName()); // El parámetro obligatorio tiene valor por defecto
 console.log(getFullName(undefined, "Doe"));
 ```
 
-Los [parámetros con valor por defecto](http://www.typescriptlang.org/docs/handbook/functions.html#optional-and-default-parameters) pueden estar al principio. En ese caso, hacemos la llamada asignando `undefined`.
+Los parámetros con valor por defecto pueden estar al principio. En ese caso, hacemos la llamada asignando `undefined`.
 
 Si marcamos un parámetro como **opcional y le asignamos un valor por defecto** el compilador arrojará un error en tiempo de compilación:
 
@@ -1494,7 +1480,7 @@ function getFullName(firstName?: string = "John") {
 
 En determinadas situaciones podemos necesitar que una función acepte un número variable de parámetros. Al igual que Java o Kotlin, TypeScript permite el paso de un número variable de parámetros.
 
-En TypeScript se llama [**_'rest parameters'_**](http://www.typescriptlang.org/docs/handbook/functions.html#rest-parameters) y se indica mediante tres puntos (...) delante del nombre del parámetro:
+En TypeScript se llama [**_'rest parameters'_**](https://www.typescriptlang.org/docs/handbook/2/functions.html#rest-parameters-and-arguments) y se indica mediante tres puntos (...) delante del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, ...moreNames: string[]) {
@@ -1605,9 +1591,9 @@ main();
 
 ## Módulos
 
-Los [módulos](http://www.typescriptlang.org/docs/handbook/modules.html) sirven para estructurar el código en múltiples ficheros `.ts` en vez de escribir todo el código en un único fichero. Cada fichero tendrá su propio ámbito cuando se usan módulos por lo que hay que exportar explícitamente clases o variables para luego ser importadas y utilizadas en otros ficheros.
+Los [**módulos**](https://www.typescriptlang.org/docs/handbook/2/modules.html) sirven para **estructurar el código** en múltiples ficheros `.ts` en vez de escribir todo el código en un único fichero. Cada fichero tendrá su propio ámbito cuando se usan módulos por lo que hay que exportar explícitamente clases o variables para luego ser importadas y utilizadas en otros ficheros.
 
-Los módulos se incluyen de forma nativa en la especificación ES2015 y por tanto también están disponibles en TypeScript. Con TypeScript se pueden compilar los módulos para ES5 o ES3.
+Los módulos se incluyen de forma nativa en la **especificación ES2015** y por tanto también están disponibles en TypeScript. Con TypeScript se pueden compilar los módulos para ES5 o ES3.
 
 Además de los módulos, TypeScript tiene soporte para los _'namespaces'_ o espacios de nombre que tiene un objetivo similar. Dado que los espacios de nombre es un concepto de TypeScript y los módulos forman parte de ES2015 se recomienda el uso de los módulos. En Angular también se utiliza el concepto de módulos.
 
@@ -1821,7 +1807,7 @@ var boarder = new Friends.Skateboarder("Foo");
 
 Cuando se utiliza una biblioteca JavaScript existente, TypeScript no conoce los tipos ya que JavaScript no tiene tipos. Sin tipos, no se obtienen errores en tiempo de compilación ya que TypeScript no puede realizar comprobaciones de tipos.
 
-Es por eso que TypeScript admite [archivos de declaración](http://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) para bibliotecas JavaScript existentes. El archivo de declaración es un archivo TypeScript normal que por convención termina con `.d.ts` y contiene las declaraciones de tipo para dicha biblioteca.
+Es por eso que TypeScript admite [archivos de declaración](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) para bibliotecas JavaScript existentes. El archivo de declaración es un archivo TypeScript normal que por convención termina con `.d.ts` y contiene las declaraciones de tipo para dicha biblioteca.
 
 Por ejemplo, pongamos que tenemos una pequeña biblioteca Javascript con una única función:
 
@@ -2098,14 +2084,14 @@ let move: Direction = Direction.Left;
 console.log(move); // "LEFT"
 
 // ------------
-// TIPOS DE UNIÓN Y TIPOS DE INTERSECCIÓN
+// UNION TYPES and INTERSECTION TYPES
 // ------------
 // Los tipos de unión permiten que una variable tenga MÁS DE UN TIPO.
 let union: number | string;
 union = 10; // Correcto
 union = 'hello'; // Correcto
 
-// Función que acepta un parámetro de tipo unión
+// Función que acepta un parámetro de tipo UNION
 function printId(id: number | string) {
   console.log(`Your ID is: ${id}`);
 }
@@ -2202,7 +2188,7 @@ let multiply = function(x: number, y: number): number {
 };
 let result = multiply(2, 3); // 6
 
-// Las funciones FLECHA son una forma más concisa de definir funciones anónimas
+// Las funciones FLECHA son una forma más concisa de definir funciones ANÓNIMAS
 let double = (x: number): number => x * 2;
 let result = double(3); // 6
 
@@ -2327,7 +2313,10 @@ function createSquare(config: SquareConfig): { color: string; area: number } {
 // ------------
 // Type Assertion
 let someValue: any = 'this is a string';
+// Option A
 let strLength: number = (someValue as string).length;
+// Option B
+let strLength: number = (<string>someValue).length;
 
 // Type Guards
 function isString(x: any): x is string {
@@ -2364,7 +2353,7 @@ import { add } from './math';
 console.log(add(2, 3)); // 5
 
 // ------------
-// ESPACIO DE NOMBRES
+// ESPACIO DE NOMBRES (NAMESPACES)
 // ------------
 namespace Validation {
   export interface StringValidator {
@@ -2398,12 +2387,13 @@ if (myButton) {
 }
 
 // ------------
-// TIPOS UTILITARIOS
+// UTILITY TYPES
 // ------------
-// Partial, Readonly, Pick y Omit
+// Partial, Readonly, Pick, Omit, Required
 interface Todo {
   title: string;
   description: string;
+  isDone?: boolean;
 }
 
 let todo: Partial<Todo> = {};
@@ -2416,6 +2406,9 @@ const readOnlyTodo: Readonly<Todo> = {
 
 type TodoPreview = Pick<Todo, 'title'>;
 type TodoWithoutDescription = Omit<Todo, 'description'>;
+
+const obj2: Required<Todo> = { title: 'Learn', description };
+// Property 'isDone' is missing in type '{ title: string; description: string; }' but required in type 'Required<Todo>'
 ```
 
 ---
@@ -2424,6 +2417,7 @@ type TodoWithoutDescription = Omit<Todo, 'description'>;
 
 - 🔸 <https://www.typescriptlang.org/>
 - <https://www.typescriptlang.org/docs/>
+- <https://www.typescriptlang.org/es/play/>
 
 ## Licencia
 
