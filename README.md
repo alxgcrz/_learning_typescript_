@@ -10,9 +10,11 @@ TypeScript es completamente compatible con JavaScript. Todo el código JavaScrip
 
 Además, se puede utilizar bibliotecas de JavaScript en proyectos de TypeScript incluyendo los archivos JavaScript directamente o utilizando definiciones de tipo para la biblioteca. Las definiciones de tipos proporcionan información de tipos para las bibliotecas de JavaScript, lo que facilita su uso en TypeScript.
 
-El compilador TypeScript _"transpila"_ código escrito en TypeScript en código JavaScript válido y entendible por cualquier navegador o entorno que soporte y pueda ejecutar código Javascript.
+El compilador TypeScript _"transpila"_ código escrito en TypeScript en código JavaScript válido y entendible por cualquier navegador o entorno que soporte y pueda ejecutar código Javascript. **_"Transpilar"_** (del inglés "transpile") es un término que se refiere al proceso de convertir el código fuente escrito en un lenguaje de programación a otro lenguaje de programación que opera en el mismo nivel de abstracción. En este caso, TypeScript se convierte a JavaScript, ambos lenguajes de alto nivel.
 
-## Instalación
+## Primeros pasos
+
+### Instalación
 
 La forma más rápida y cómoda de instalar TypeScript es via **_NPM_**. TypeScript está disponible como **paquete** en el registro de [NPM](https://www.npmjs.com/package/typescript).
 
@@ -38,18 +40,18 @@ Podemos comprobar la versión de Typescript instalada:
 tsc -v
 ```
 
-## Usando TypeScript
+### Usando TypeScript
 
-Para compilar un fichero TypeScript con extensión `.ts` escribimos en el terminal:
+Para transpilar un fichero TypeScript con extensión `.ts` escribimos en el terminal:
 
 ```sh
-// Compilar fichero con las opciones por defecto
+// Transpilar fichero con las opciones por defecto
 tsc {fileName}.ts
 
-// Compilar cualquier fichero con las opciones por defecto
+// Transpilar cualquier fichero con las opciones por defecto
 tsc src/*.ts
 
-// Compilar un fichero en una ubicación determinada
+// Transpilar un fichero en una ubicación determinada
 tsc {fileName}.ts --outfile out/{filename}.js
 
 // Mostrar todas las opciones
@@ -59,7 +61,7 @@ tsc --all
 tsc <fileName>.ts --target ES5 --module commonjs
 ```
 
-Para no tener que compilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que compilará el fichero TypeScript indicado cada vez que detecte un cambio:
+Para no tener que transpilar un fichero TypeScript cada vez que se realicen cambios, podemos arrancar el compilador TypeScript en modo _'watch'_ de forma que transpilará el fichero TypeScript indicado cada vez que detecte un cambio:
 
 ```sh
 // Se finaliza el proceso con 'Ctrl + C'
@@ -123,6 +125,20 @@ Para depurar el código TypeScript en el navegador, debemos utilizar un fichero 
 Disponemos de varios editores online o _playground_ para escribir y probar código escrito en TypeScript como puede ser el [editor oficial](https://www.typescriptlang.org/play).
 
 **Visual Studio Code** es un editor que incluye [soporte para TypeScript](https://code.visualstudio.com/docs/typescript/typescript-tutorial) aunque no incluye el compilador `tsc`.
+
+### Ejecutando TypeScript
+
+En el desarrollo con TypeScript, no siempre es necesario utilizar un archivo HTML para ejecutar el código JavaScript transpilado.
+
+Existen varias alternativas que permiten ejecutar directamente este código en entornos fuera del navegador, como [Node.js](https://nodejs.org/en), [Bun](https://bun.sh/), [Deno](https://deno.com/) o incluso [ts-node](https://www.npmjs.com/package/ts-node). Estas herramientas proporcionan la capacidad de **ejecutar scripts JavaScript o TypeScript** en un entorno de servidor o directamente en la línea de comandos, facilitando el desarrollo y la ejecución de scripts:
+
+```sh
+// Validar la instalación de Node.js
+$ node -v
+
+// Ejecutar el fichero transpilado JavaScript
+$ node {fichero.js}
+```
 
 ## Tipos básicos
 
