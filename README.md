@@ -950,11 +950,11 @@ En TypeScript se pueden emplear construccciones orientadas a objetos como interf
 
 ### Interfaces
 
-Una [interfaz](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) es una construcción TypeScript. No hay salida compilada en JavaScript. Esto se debe a que una interfaz es solo un tipo sin implementación. Como JavaScript no tiene tipos y no hay implementación para una interfaz, no hay nada que generar en JavaScript.
+Una [interfaz](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) en TypeScript es una construcción que no genera una salida compilada en JavaScript, ya que se trata solo de un tipo sin implementación. Como JavaScript no soporta tipos y una interfaz no incluye lógica de ejecución, no hay nada que traducir al código final.
 
-Uno de los principios básicos de TypeScript es la verificación de tipos. Dado que una interfaz es solo un tipo sin implementación, es una forma poderosa de crear contratos de forma que si no se satisface la interfaz, TypeScript mostrará un error en tiempo de compilación.
+Uno de los principios fundamentales de TypeScript es la **verificación de tipos**. Las interfaces son una herramienta poderosa para definir contratos que el código debe cumplir. Si una interfaz no se respeta, TypeScript generará un error en tiempo de compilación.
 
-Como ejemplo, cuando una función define un parámetro sin un tipo explícito, el compilador le asigna el tipo `any`, con lo cual el compilador no puede realizar ninguna verificación de tipos y nuestro código es propenso a errores:
+Por ejemplo, cuando una función define un parámetro sin un tipo explícito, el compilador le asigna el tipo `any`, lo que impide realizar verificaciones de tipo. Esto aumenta el riesgo de errores en el código.
 
 ```typescript
 // Función con el parámetro 'friend' de tipo 'any'
@@ -967,9 +967,9 @@ function getFullName(friend) {
 }
 ```
 
-En cambio, con una interfaz podemos restringir el tipo pasado a la función y permitir a TypeScript realizar la comprobación de tipos.
+Por el contrario, al utilizar una interfaz podemos restringir el tipo de datos que se pasa a una función, lo que permite a TypeScript realizar la verificación de tipos.
 
-Una interfaz tiene un nombre, puede tener ninguna, una o varias propiedades y ninguno, uno o varios métodos que las clases que implementen la interfaz deberán implementar. Puede que no todas las propiedades de una interfaz sean obligatorias. TypeScript permite las propiedades opcionales, que se indican con el símbolo '?':
+Una interfaz tiene un nombre y puede definir una o más propiedades, así como uno o varios métodos que las clases que implementen la interfaz deben proporcionar. No todas las propiedades de una interfaz tienen que ser obligatorias; TypeScript admite propiedades opcionales, que se marcan con el símbolo `?`:
 
 ```typescript
 interface Friend {
@@ -1000,11 +1000,15 @@ Se puede definir propiedades de sólo lectura con la palabra clave `readonly`. U
 interface Developer {
   readonly knowsTypeScript: boolean;
 }
+
+const dev: Developer = {
+  knowsTypeScript: true, // Aquí se inicializa
+};
 ```
 
 #### Implementar una interfaz
 
-Las clases en TypeScript pueden implementar una o varias interfaces usando la palabra clave `implements`. Para implementar varias interfaces, se separan los nombres con comas.  En el ejemplo la clase `Friend` implementa la interfaz `Person`:
+Las clases en TypeScript pueden implementar una o varias interfaces usando la palabra clave `implements`. Para implementar varias interfaces, se separan los nombres con comas:
 
 ```typescript
 interface Person {
@@ -1014,6 +1018,7 @@ interface Person {
     getFullName(): string;
 }
 
+// La clase 'Friend' implementa la interfaz 'Person'
 class Friend implements Person {
   firstName: string;
   lastName?: string;  //optional
@@ -1101,6 +1106,7 @@ TypeScript sólo permite **un único constructor** a diferencia de C# o Java. El
 Pongamos por ejemplo una clase Java con tres constructores que admiten uno, dos y tres parámetros para construir un objeto de ese tipo, siendo sólamente uno de los parámetros requerido ya que se repite en los tres constructores:
 
 ```java
+// Clase "Friend" en Java
 class Friend {
   String fullName = "";
   int age = 0;
@@ -1131,9 +1137,10 @@ class Main {
 }
 ```
 
-Para definir la misma clase en TypeScript con un sólo constructor usamos los parámetros opcionales para indicar los que son opcionales y los valores por defecto para asignar valores a los parámetros:
+Para definir la misma clase en TypeScript con un sólo constructor usamos los **parámetros opcionales** para indicar los que son opcionales y los valores por defecto para asignar valores a los parámetros:
 
 ```typescript
+// Clase "Friend" en TypeScript
 class Friend {
   constructor(public fullName: string, public age?: number, public knowsTypeScript: boolean = true) { }
 }
@@ -1152,7 +1159,7 @@ console.log(friend.knowsTypeScript); // Prints 'true' que es el valor por defect
 
 [_'Parameter properties'_](https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties) es una forma directa en TypeScript de definir propiedades de forma implícita que serán definidas e inicializadas por el compilador a partir de los parámetros del constructor.
 
-Para indicar al compilador que es un _'parameter property'_ se añade el modificador de visibilidad al parámetro en el constructor. El compilador definirá e inicializará una propiedad con el mismo nombre que el parámetro de forma automática:
+Para indicar al compilador que es un _'parameter property'_ se añade el **modificador de visibilidad al parámetro en el constructor**. El compilador definirá e inicializará una propiedad con el mismo nombre que el parámetro de forma automática:
 
 ```typescript
 // Clase con una propiedad que se inicializa en el constructor
@@ -1175,7 +1182,7 @@ class Friend {
 
 #### 'Getters/Setters'
 
-TypeScript admite _'getters/setters'_ como una forma de interceptar accesos a un miembro de un objeto como ocurre en C#. La única limitación es que tenemos que indicar un _target 'ES5'_ o superior. En la especificación _'ES3'_ o inferior no está soportado.
+TypeScript admite _'getters/setters'_ como una forma de interceptar accesos a un miembro de un objeto como ocurre en C#. La única limitación es que tenemos que indicar un `"target": "es5"` o superior. En la especificación ES3 o inferior no está soportado.
 
 ```typescript
 class Friend {
@@ -1235,7 +1242,7 @@ class Friend {
 
 #### Miembros estáticas
 
-TypeScript admite tanto[propiedades como miembros estáticas](https://www.typescriptlang.org/docs/handbook/2/classes.html#static-members). Los miembros estáticos pertenecen a la clase y no a una instancia de la clase. Eso significa que su valor existe solo una vez, sin importar cuántas instancias se creen de la clase.
+TypeScript admite tanto [propiedades como miembros estáticas](https://www.typescriptlang.org/docs/handbook/2/classes.html#static-members). Los miembros estáticos pertenecen a la clase y no a una instancia de la clase. Eso significa que su valor existe solo una vez, sin importar cuántas instancias se creen de la clase.
 
 ```typescript
 class Friend {
@@ -1442,7 +1449,7 @@ function multiply(x: number, y: number): number {
 
 En Javascript se pueden omitir parámetros en la llamada de la función mientras que en TypeScript no se puede.
 
-Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](https://www.typescriptlang.org/docs/handbook/2/functions.html#optional-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación '?' después del nombre del parámetro:
+Si una parámetro no es obligatorio podemos marcarlo como [**parámetro opcional**](https://www.typescriptlang.org/docs/handbook/2/functions.html#optional-parameters) y así obviarlo en la llamada. Para ello usamos el signo de interrogación `?` después del nombre del parámetro:
 
 ```typescript
 function getFullName(firstName: string, lastName?: string) {
@@ -1539,7 +1546,7 @@ console.log(add('Hello', ' World')); // "Hello World"
 
 La notación de **función flecha** se puede utilizar en TypeScript, al igual que en JavaScript. En otros lenguajes también reciben el nombre de **funciones lambda**.
 
-Esta notación se puede usar en funciones anónimas. Al utilizar el operador flecha `=>' se elimina la necesidad de utilizar la palabra _'function'_.
+Esta notación se puede usar en funciones anónimas. Al utilizar el operador flecha `=>` se elimina la necesidad de utilizar la palabra `function`.
 
 Los parámetros se pasan entre paréntesis y la expresión de la función se encierran entre llaves `{}`.
 
@@ -1581,7 +1588,7 @@ console.log(resultadoResta); // Salida esperada: 6
 
 ### 'Async' y 'Await'
 
-Para hacer el código asíncrono más fácil de escribir, TypeScript tiene soporte para _'async'_ y _'await'_ al igual que otros lenguajes como C# desde la versión 1.7:
+Para hacer el código asíncrono más fácil de escribir, TypeScript tiene soporte para `async` y `await` al igual que otros lenguajes como C# desde la versión 1.7:
 
 ```typescript
 function delay(ms: number) {
