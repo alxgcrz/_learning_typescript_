@@ -92,21 +92,21 @@ Esto crea un fichero [`tsconfig.json`](https://www.typescriptlang.org/docs/handb
 }
 ```
 
-Algunas opciones son:
+Algunas [opciones](https://www.typescriptlang.org/tsconfig/) son:
 
-- **`target`**: la versión de JavaScript a la que se tiene que compilar.
+- [`target`](https://www.typescriptlang.org/es/tsconfig/#target): la versión de JavaScript a la que se tiene que compilar.
 
-- **`module`**: el sistema de módulos a utilizar
+- [`module`](https://www.typescriptlang.org/es/tsconfig/#module): el sistema de módulos a utilizar
 
-- **`strict`**: habilitar/deshabilitar todas las opciones estrictas de comprobación de tipos (**recomendable** que esté activado)
+- [`strict`](https://www.typescriptlang.org/es/tsconfig/#strict): habilitar/deshabilitar todas las opciones estrictas de comprobación de tipos (**recomendable** que esté activado)
 
-- **`outDir`**: el directorio de salida de los ficheros JavaScript compilados
+- [`outDir`](https://www.typescriptlang.org/es/tsconfig/#outDir): el directorio de salida de los ficheros JavaScript compilados
 
-- **`rootDir`**: la carpeta raíz donde se ubican los ficheros TypeScript del proyecto
+- [`rootDir`](https://www.typescriptlang.org/es/tsconfig/#rootDir): la carpeta raíz donde se ubican los ficheros TypeScript del proyecto
 
-- **`noImplicitAny`**: habilitar/deshabilitar la generación de informes de error para expresiones y declaraciones con un tipo 'any' implícito
+- [`noImplicitAny`](https://www.typescriptlang.org/es/tsconfig/#noImplicitAny): habilitar/deshabilitar la generación de informes de error para expresiones y declaraciones con un tipo 'any' implícito
 
-- **`sourceMap`**: genera ficheros `*.map` en la compilación de ficheros
+- [`sourceMap`](https://www.typescriptlang.org/es/tsconfig/#sourceMap): genera ficheros `*.map` en la compilación de ficheros
 
 Cuando se utiliza un fichero `tsconfig.json` con las opciones de compilación, **no es necesario** indicar el nombre del fichero o ficheros con el código Typescript, ya que se compilarán todos los ficheros `.ts` del proyecto. Si se indica el nombre del fichero `.ts`, se ignora el fichero `tsconfig.json` y su contenido.
 
